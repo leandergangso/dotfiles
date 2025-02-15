@@ -1,0 +1,21 @@
+[user]
+	email = leander.gangso98@gmail.com
+	name = Leander Gangsø
+	signingkey = leander.gangso98@gmail.com
+[alias]
+	logs = log --show-signature
+	sign = config --global commit.gpgsign true
+	ignore = "!gi() { curl -sL https://www.toptal.com/developers/gitignore/api/$@ ;}; gi"
+[commit]
+	gpgsign = false
+[init]
+	defaultBranch = main
+[core]
+	pager="less -FX"
+[pull]
+	rebase = true
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+
+[rerere]
+	enabled = true

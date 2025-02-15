@@ -1,0 +1,34 @@
+general {
+	colors = true
+	interval = 10
+}
+
+order += "tztime local"
+order += "volume master"
+order += "cpu_usage"
+order += "memory"
+
+volume master {
+        format = "VOL %volume"
+        format_muted = "VOL muted"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
+cpu_usage {
+        format= "CPU %usage"
+        max_threshold= 75
+}
+
+memory {
+        format = "MEM %percentage_used"
+        threshold_degraded = "10%"
+        format_degraded = "MEMORY: %free"
+}
+
+tztime local {
+        format = "%H:%M - %d.%m.%Y"
+}
+
+
