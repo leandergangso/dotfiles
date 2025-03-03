@@ -10,12 +10,4 @@ cfg.enable_tab_bar = false
 cfg.tab_bar_at_bottom = true
 cfg.window_decorations = "RESIZE"
 
---cfg.keys = {
---	{
---		key = '"',
---		mods = "CTRL|SHIFT|ALT",
---		action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
---	},
---}
-
 return cfg

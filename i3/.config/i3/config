@@ -12,11 +12,8 @@
 # main mod key (super key)
 set $mod Mod4
 
-# set background 
-exec feh --no-fehbg --bg-fill ~/Pictures/black.jpg
-
 # disable sleep
-exec xset s off -dpms s noblank
+exec --no-startup-id xset s off -dpms s noblank
 
 # --------
 # KEYBINDS
@@ -24,7 +21,7 @@ exec xset s off -dpms s noblank
 
 # application shortcuts
 bindsym $mod+Return exec wezterm
-bindsym $mod+shift+n exec nautilus --no-desktop
+bindsym $mod+shift+n exec thunar
 
 # kill focused window
 bindsym $mod+c kill
@@ -36,12 +33,12 @@ bindsym $mod+ctrl+shift+h exec systemctl suspend
 bindsym $mod+ctrl+l exec i3lock -c "#000000"
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+d exec --no-startup-id dmenu_run -nb black
 
 # screenshot
 bindsym $mod+shift+s exec flameshot gui
 
-# keyboard layout toggle
+# keyboard lang-layout toggle
 bindsym $mod+space exec (setxkbmap -query | grep -q "layout:\s\+us") && setxkbmap no || setxkbmap us
 
 # media player controls
@@ -56,21 +53,15 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
-# window manipulation
-bindsym $mod+q split toggle 
-bindsym $mod+f fullscreen toggle
-
 # change window focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
+
+# window manipulation
+bindsym $mod+q split toggle 
+bindsym $mod+f fullscreen toggle
 
 # change container layout 
 bindsym $mod+w layout tabbed
@@ -90,8 +81,8 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec --no-startup-id i3-msg exit
 
 # --------------------
 # WORKSTATION SETUP 3x
@@ -100,6 +91,18 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # output = monitor
 # containers = windows
 # workspace = current output
+
+# set monitors
+set $ml "HDMI-0"
+set $mc "DP-2"
+set $mr "DP-0"
+
+# monitor setup
+exec --no-startup-id xrandr \
+    --dpi 96\
+    --output $ml --mode 1920x1080 --pos 0x0 --rotate left \
+    --output $mr --mode 1920x1080 --pos 3000x370 \
+    --output $mc --mode 1920x1080 --pos 1080x370 --primary
 
 # Define names for default workspaces for which we configure key bindings later on.
 set $ws1 "1"
@@ -114,11 +117,6 @@ set $ws9 "9"
 set $ws10 "10"
 set $ws11 "11"
 set $ws12 "12"
-
-# set monitors
-set $ml "HDMI-0"
-set $mc "DP-2"
-set $mr "DP-0"
 
 # set workspace for monitor
 workspace $ws1 output $ml
@@ -213,7 +211,7 @@ font pango:monospace 8
 
 # set gaps between windows
 gaps outer 0
-gaps inner 5
+gaps inner 0
 smart_gaps on
 
 # will focus on window when mouse moves over window
@@ -261,7 +259,6 @@ client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
 client.background       #F8F8F2
 
 bar {
-  font pango:monospace 8
   status_command i3status
 
   position bottom
