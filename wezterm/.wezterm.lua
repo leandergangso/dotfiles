@@ -16,6 +16,11 @@ cfg.keys = {
         mods = "CTRL|SHIFT",
         action = wezterm.action.DisableDefaultAssignment,
     },
+    {
+        key = "Backspace",
+        mods = "CTRL",
+        action = wezterm.action.SendString("\x17"),
+    }
 }
 
 return cfg
