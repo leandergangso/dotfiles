@@ -1,8 +1,9 @@
 local wezterm = require("wezterm")
 local cfg = wezterm.config_builder()
 
+cfg.font = wezterm.font("JetBrainsMono Nerd Font")
 cfg.font_size = 11
-cfg.font = wezterm.font("FiraCode Nerd Font")
+cfg.line_height = 1.2
 
 cfg.color_scheme = "Catppuccin Mocha"
 
@@ -20,7 +21,7 @@ cfg.keys = {
         key = "Backspace",
         mods = "CTRL",
         action = wezterm.action.SendString("\x17"),
-    }
+    },
 }
 
 return cfg

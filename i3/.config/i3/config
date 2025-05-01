@@ -33,7 +33,7 @@ bindsym $mod+ctrl+shift+h exec systemctl suspend
 bindsym $mod+ctrl+l exec i3lock -c "#000000"
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run -nb black
+bindsym $mod+d exec dmenu_run -nb black
 
 # screenshot
 bindsym $mod+shift+s exec flameshot gui
@@ -42,12 +42,15 @@ bindsym $mod+shift+s exec flameshot gui
 bindsym $mod+space exec (setxkbmap -query | grep -q "layout:\s\+us") && setxkbmap no || setxkbmap us
 
 # media player controls
-bindsym ctrl+shift+space exec playerctl play-pause
-bindsym $mod+n exec playerctl next
-bindsym $mod+b exec playerctl previous
+#bindsym ctrl+shift+space exec --no-startup-id playerctl play-pause
+bindsym $mod+n exec --no-startup-id playerctl next
+bindsym $mod+b exec --no-startup-id playerctl previous
 
 # volume controls
 set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl prev
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +3% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -3% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
@@ -82,7 +85,7 @@ bindsym $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session)
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Shift+e exec --no-startup-id i3-msg exit
+#bindsym $mod+Shift+e exec --no-startup-id i3-msg exit
 
 # --------------------
 # WORKSTATION SETUP 3x
