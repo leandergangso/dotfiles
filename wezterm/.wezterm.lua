@@ -5,9 +5,6 @@ cfg.font = wezterm.font("JetBrainsMono Nerd Font")
 cfg.font_size = 11
 cfg.line_height = 1.2
 
---cfg.color_scheme = "Catppuccin Latte"
---cfg.color_scheme = "Catppuccin Frappe"
---cfg.color_scheme = "Catppuccin Macchiato"
 cfg.color_scheme = "Catppuccin Mocha"
 
 cfg.enable_tab_bar = false
