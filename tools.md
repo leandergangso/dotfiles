@@ -1,5 +1,7 @@
 # Tools to install
 
+look into moving to wayland & hyperland in the future.
+
 idea make a script that can auto install these tools on arch using pacman / yay
 
 `sudo pacman -S ?`
