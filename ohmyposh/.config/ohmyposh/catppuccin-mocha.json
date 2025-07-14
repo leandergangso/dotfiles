@@ -11,7 +11,7 @@
     "final_space": true,
     "console_title_template": "{{ .Shell }} in {{ .Folder }}",
     "transient_prompt": {
-        "template": "\uf105 ",
+        "template": "{{ .Shell }} \uf105 ",
         "foreground": "p:closer"
     },
     "blocks": [
