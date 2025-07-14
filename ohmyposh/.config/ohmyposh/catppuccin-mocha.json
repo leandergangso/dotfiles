@@ -12,7 +12,7 @@
     "console_title_template": "{{ .Shell }} in {{ .Folder }}",
     "transient_prompt": {
         "template": "{{ .Shell }} \uf105 ",
-        "foreground": "p:closer"
+        "foreground": "p:blue"
     },
     "blocks": [
         {
