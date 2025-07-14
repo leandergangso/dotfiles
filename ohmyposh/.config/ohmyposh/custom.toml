@@ -3,7 +3,7 @@ version = 3
 final_space = true
 
 [upgrade]
-notice = true
+notice = false
 interval = "168h"
 auto = false
 source = "github"

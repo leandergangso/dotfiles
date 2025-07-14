@@ -22,10 +22,6 @@ idea make a script that can auto install these tools on arch using pacman / yay
 
 `sudo yay -S ?`
 
-- ``
-
-
-
 - `firacode nerd font`
 - `firefox`
 - `brave`
