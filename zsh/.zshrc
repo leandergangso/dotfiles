@@ -1,13 +1,12 @@
-Z_PLUGIN_DIR="$HOME/.config/zsh/plugins"
+Z_PLUGIN_DIR="$HOME/.local/share/zsh/plugins"
 
-# zsh_unplugged - https://github.com/mattmc3/zsh_unplugged
 function plugin-load {
     local repo plugdir initfile initfiles=()
     for repo in $@; do
         plugdir=$Z_PLUGIN_DIR/${repo:t}
         initfile=$plugdir/${repo:t}.plugin.zsh
         if [[ ! -d $plugdir ]]; then
-            cho "Cloning $repo..."
+            echo "Cloning $repo..."
             git clone -q --depth 1 --recursive --shallow-submodules $repo $plugdir
         fi
         if [[ ! -e $initfile ]]; then
@@ -16,7 +15,7 @@ function plugin-load {
             ln -sf $initfiles[1] $initfile
         fi
         fpath+=$plugdir
-        (( $+functions[zsh-defer] )) && zsh-defer . $initfile || . $initfile
+        source $initfile
     done
 }
 
@@ -26,14 +25,14 @@ export WORDCHARS=${WORDCHARS/\/}
 export PATH=$PATH:$HOME/go/bin
 
 # plugins
-# repos=(
-#   github.com/zsh-users/zsh-history-substring-search
-#   github.com/zsh-users/zsh-syntax-highlighting   
-#   github.com/zsh-users/zsh-autosuggestions
-#   github.com/zsh-users/zsh-completions
-#   github.com/Aloxaf/fzf-tab
-# )
-# plugin-load $repos
+repos=(
+  https://github.com/zsh-users/zsh-history-substring-search
+  https://github.com/zsh-users/zsh-syntax-highlighting   
+  https://github.com/zsh-users/zsh-autosuggestions
+  https://github.com/zsh-users/zsh-completions
+  https://github.com/Aloxaf/fzf-tab
+)
+plugin-load $repos
 
 # completions
 autoload -U compinit && compinit
@@ -98,7 +97,7 @@ eval "$(zoxide init --cmd cd zsh)"
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/catppuccin-mocha.json)"
 
 # pnpm
-export PNPM_HOME="/home/leander/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
