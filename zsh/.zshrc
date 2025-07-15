@@ -77,6 +77,7 @@ alias cls='clear'
 alias vim='nvim'
 alias work='cd /work && ll'
 
+alias gst='git status'
 alias cat='bat --paging=never'
 alias grep='grep --color'
 alias tree='tree -C'
@@ -87,9 +88,9 @@ alias -g .....='../../../..'
 alias -g ......='../../../../..'
 
 alias ls='ls --color'
+alias la='ls -ah --color'
 alias ll='ls -lh --color'
-alias la='ls -lah --color'
-alias lsa='ls -ah --color'
+alias l='ls -lah --color'
 
 # integrations
 eval "$(fzf --zsh)"
