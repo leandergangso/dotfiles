@@ -37,7 +37,7 @@
                     "properties": {
                         "folder_icon": "..\ue5fe..",
                         "home_icon": "~",
-                        "style": "agnoster_full"
+                        "style": "full"
                     },
                     "style": "plain",
                     "template": "{{ .Path }} ",
