@@ -75,12 +75,10 @@ bindkey "^[[F" end-of-line # key: home
 alias _='sudo'
 alias cls='clear'
 alias vim='nvim'
-alias work='cd /work && ll'
-
-alias gst='git status'
 alias cat='bat --paging=never'
 alias grep='grep --color'
 alias tree='tree -C'
+alias work='cd /work && ll'
 
 alias -g ...='../..'
 alias -g ....='../../..'
@@ -91,6 +89,12 @@ alias ls='ls --color'
 alias la='ls -ah --color'
 alias ll='ls -lh --color'
 alias l='ls -lah --color'
+
+alias gst='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gd='git diff'
+alias gac='git add . && git commit'
 
 # integrations
 eval "$(fzf --zsh)"
