@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 local cfg = wezterm.config_builder()
 
 cfg.font = wezterm.font("JetBrainsMono Nerd Font")
-cfg.font_size = 11
+cfg.font_size = 10
 cfg.line_height = 1.2
 
 cfg.color_scheme = "Catppuccin Mocha"
