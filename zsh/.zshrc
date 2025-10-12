@@ -66,13 +66,14 @@ bindkey -e
 bindkey '^y' autosuggest-accept
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 bindkey "^[[1;5D" backward-word # key: ctrl+arrow-left
 bindkey "^[[1;5C" forward-word # key: ctrl+arrow-right
 bindkey "^[[H" beginning-of-line # key: end
 bindkey "^[[F" end-of-line # key: home
 
 # aliases
-alias _='sudo'
 alias cls='clear'
 alias vim='nvim'
 alias cat='bat --paging=never'
