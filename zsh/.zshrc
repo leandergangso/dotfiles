@@ -99,6 +99,7 @@ alias gac='git add . && git commit'
 
 # integrations
 eval "$(fzf --zsh)"
+eval "$(task --completion zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/catppuccin-mocha.json)"
 
