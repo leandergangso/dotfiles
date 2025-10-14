@@ -86,16 +86,15 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 alias -g ......='../../../../..'
 
-alias ls='ls --color'
-alias la='ls -ah --color'
-alias ll='ls -lh --color'
-alias l='ls -lah --color'
+alias ls='ls --color --group-directories-first'
+alias la='ls -ah --color --group-directories-first'
+alias ll='ls -lh --color --group-directories-first'
+alias l='ls -lah --color --group-directories-first'
 
 alias gst='git status'
 alias ga='git add'
 alias gc='git commit'
 alias gd='git diff'
-alias gac='git add . && git commit'
 
 # integrations
 eval "$(fzf --zsh)"
