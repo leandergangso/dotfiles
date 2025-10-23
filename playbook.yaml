@@ -1,0 +1,75 @@
+---
+- name: Setup Arch Linux environment with dotfiles and Neovim
+  hosts: localhost
+  connection: local
+  gather_facts: true
+
+  vars:
+    dotfiles_repo: "https://github.com/leandergangso/dotfiles.git"
+    dotfiles_path: "{{ ansible_env.HOME }}/.dotfiles"
+    nvim_repo: "https://github.com/leandergangso/nvim.git"
+    nvim_path: "{{ ansible_env.HOME }}/.config/nvim"
+
+    packages_pacman:
+      - yay
+      - base-devel
+      - go # FIX: possible with pacman?
+      - git
+      - neovim
+      - stow
+      - neovim
+      - python
+      - python-pip
+      - curl
+      - wget
+      - i3
+      - i3-lock
+      - go-task
+
+    packages_aur:
+      - brave
+      - localsend
+
+    packages_manual:
+      - go install github.com/air-verse/air@latest
+
+  vars_prompt:
+    - name: "enable_dotfiles"
+      prompt: |
+        Select dotfiles sets to enable (comma separated):
+        Options: zsh, git, tmux, extra
+      private: false
+
+  tasks:
+    - name: Install pacman packages
+      pacman:
+        name: "{{ packages_pacman }}"
+        state: present
+        update_cache: yes
+
+    - name: Install AUR packages
+      yay: # FIX:
+        name: "{{ packages_aur }}"
+        state: present
+        update_cache: yes
+
+    - name: Install manuall packages
+      shell:
+      loop: "{{ packages_manual }}"
+
+    - name: Clone or update dotfiles repo
+      git:
+        repo: "{{ dotfiles_repo }}"
+        dest: "{{ dotfiles_path }}"
+        update: yes
+
+    - name: Run GNU Stow on dotfiles
+      command: stow -d "{{ dotfiles_path }}" -t "{{ ansible_env.HOME }}" .
+      args:
+        chdir: "{{ dotfiles_path }}"
+
+    - name: Clone or update Neovim config repo
+      git:
+        repo: "{{ nvim_repo }}"
+        dest: "{{ nvim_path }}"
+        update: yes

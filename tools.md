@@ -4,7 +4,7 @@ look into moving to wayland & hyperland in the future.
 
 idea make a script that can auto install these tools on arch using pacman / yay
 
-`sudo pacman -S ?`
+## pacman
 
 - `wezterm`
 - `zsh`
@@ -14,15 +14,19 @@ idea make a script that can auto install these tools on arch using pacman / yay
 - `git`
 - `bat`
 - `fzf`
+- `rg`
+- `fd`
 - `jq`
-- `ripgrep`
+- `fq`
 - `docker`
 - `podman`
 - `parallel`
+- `stow`
+- `ansible`
 
-`sudo yay -S ?`
+## yay (AUR)
 
-- `firacode nerd font`
-- `firefox`
+- `jet brain nerd font`
+- `localsend`
 - `brave`
 

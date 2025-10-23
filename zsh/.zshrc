@@ -94,6 +94,7 @@ alias l='ls -lah --color --group-directories-first'
 alias gst='git status'
 alias ga='git add'
 alias gc='git commit'
+alias gac='git add . && git commit'
 alias gd='git diff'
 
 # integrations
