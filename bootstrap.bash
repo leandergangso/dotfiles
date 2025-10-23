@@ -2,6 +2,12 @@
 
 set -e
 
+# Distro check
+if [ ! -f /etc/arch-release ]; then
+    echo "Arch Linux is required for this bootstraping."
+    exit 0
+fi
+
 # Install Ansible if missing
 if ! command -v ansible &>/dev/null; then
   echo "Installing Ansible..."

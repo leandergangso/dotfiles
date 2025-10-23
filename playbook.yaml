@@ -17,9 +17,9 @@
       - git
       - neovim
       - stow
+      - ohmyposh
+      - zsh
       - neovim
-      - python
-      - python-pip
       - curl
       - wget
       - i3
