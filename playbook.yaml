@@ -20,6 +20,7 @@
       - ohmyposh
       - zsh
       - neovim
+      - zoxide
       - curl
       - wget
       - i3

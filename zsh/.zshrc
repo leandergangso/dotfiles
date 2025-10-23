@@ -92,10 +92,11 @@ alias ll='ls -lh --color --group-directories-first'
 alias l='ls -lah --color --group-directories-first'
 
 alias gst='git status'
+alias gd='git diff'
 alias ga='git add'
 alias gc='git commit'
 alias gac='git add . && git commit'
-alias gd='git diff'
+alias gp='git push'
 
 # integrations
 eval "$(fzf --zsh)"
