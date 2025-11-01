@@ -23,6 +23,7 @@ function plugin-load {
 export EDITOR="$(command -v nvim &>/dev/null && echo nvim || echo vim)"
 export WORDCHARS=${WORDCHARS/\/}
 export PATH=$PATH:$HOME/go/bin
+export PATH=$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin
 
 # plugins
 repos=(

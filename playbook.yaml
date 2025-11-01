@@ -13,7 +13,7 @@
     packages_pacman:
       - yay
       - base-devel
-      - go # FIX: possible with pacman?
+      - go
       - git
       - neovim
       - stow
@@ -22,6 +22,8 @@
       - neovim
       - zoxide
       - curl
+      - ruby
+      - ruby-erb
       - wget
       - i3
       - i3-lock
