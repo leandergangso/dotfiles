@@ -11,7 +11,7 @@
     "final_space": true,
     "console_title_template": "{{ .Shell }} in {{ .Folder }}",
     "transient_prompt": {
-        "template": "{{ .Folder }} \uf105 ",
+        "template": "[ {{ .Folder }} ]: ",
         "foreground": "p:pink"
     },
     "blocks": [
@@ -20,12 +20,6 @@
             "alignment": "left",
             "newline": true,
             "segments": [
-                {
-                    "foreground": "p:os",
-                    "style": "plain",
-                    "template": "{{.Icon}} ",
-                    "type": "os"
-                },
                 {
                     "foreground": "p:blue",
                     "style": "plain",

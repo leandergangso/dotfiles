@@ -11,8 +11,12 @@
     nvim_path: "{{ ansible_env.HOME }}/.config/nvim"
 
     packages_pacman:
-      - yay
       - base-devel
+      - yay
+      - docker
+      - docker-compose
+      - podman
+      - podman-compose
       - go
       - git
       - neovim
