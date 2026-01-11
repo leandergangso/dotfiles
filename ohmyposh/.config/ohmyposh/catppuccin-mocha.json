@@ -11,7 +11,7 @@
     "final_space": true,
     "console_title_template": "{{ .Shell }} in {{ .Folder }}",
     "transient_prompt": {
-        "template": "[ {{ .Folder }} ]: ",
+        "template": "{{ .Folder }} {{ if .Segments.Executiontime.FormattedMs }}{{ .Segments.Executiontime.FormattedMs }} {{ end }}{{ if .Jobs }}&{{ .Jobs }} {{ end }}{{ if .Code }}?{{ .Code }} {{ end }}\uf105 ",
         "foreground": "p:pink"
     },
     "blocks": [
@@ -20,6 +20,12 @@
             "alignment": "left",
             "newline": true,
             "segments": [
+                {
+                    "type": "session",
+                    "style": "plain",
+                    "foreground": "p:pink",
+                    "template": "{{ if .SSHSession }}\ueea7  {{ end }}"
+                },
                 {
                     "foreground": "p:blue",
                     "style": "plain",

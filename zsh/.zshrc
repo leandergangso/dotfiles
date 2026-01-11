@@ -22,6 +22,7 @@ function plugin-load {
 # exports
 export EDITOR="$(command -v nvim &>/dev/null && echo nvim || echo vim)"
 export WORDCHARS=${WORDCHARS/\/}
+export GOPRIVATE=github.com/leandergangso
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin
 
@@ -73,6 +74,12 @@ bindkey "^[[1;5D" backward-word # key: ctrl+arrow-left
 bindkey "^[[1;5C" forward-word # key: ctrl+arrow-right
 bindkey "^[[H" beginning-of-line # key: end
 bindkey "^[[F" end-of-line # key: home
+bindkey " " magic-space
+
+# buffer line in editor
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^x^e' edit-command-line
 
 # aliases
 alias cls='clear'
