@@ -34,7 +34,7 @@
                 },
                 {
                     "foreground": "p:pink",
-                    "properties": {
+                    "options": {
                         "folder_icon": "..\ue5fe..",
                         "home_icon": "~",
                         "style": "full"
@@ -45,7 +45,7 @@
                 },
                 {
                     "foreground": "p:lavender",
-                    "properties": {
+                    "options": {
                         "fetch_status": true,
                         "branch_icon": "\ue725 "
                     },
@@ -68,7 +68,7 @@
                         "{{if gt .Code 0}}red{{end}}",
                         "{{if eq .Code 0}}p:closer{{end}}"
                     ],
-                    "properties": {
+                    "options": {
                         "cache_duration": "none"
                     }
                 }
@@ -83,8 +83,7 @@
                     "foreground": "p:pink",
                     "type": "executiontime",
                     "style": "plain",
-                    "properties": {
-                        "cache_duration": "none",
+                    "options": {
                         "threshold": 5000
                     }
                 }
