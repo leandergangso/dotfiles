@@ -106,6 +106,7 @@ alias gc='git commit'
 alias gac='git add . && git commit'
 alias gp='git push'
 alias gl='git pull'
+alias glo='git log --all --oneline --decorate --graph'
 
 # flatpak
 alias bruno='flatpak run com.usebruno.Bruno'
