@@ -18,6 +18,5 @@
   insteadOf = https://github.com/
 [rerere]
 	enabled = true
-
 [fetch]
 	prune = true
