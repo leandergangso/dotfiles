@@ -23,10 +23,11 @@ idea make a script that can auto install these tools on arch using pacman / yay
 - `parallel`
 - `stow`
 - `ansible`
+- `age`
+- `pass`
 
 ## yay (AUR)
 
 - `jet brain nerd font`
 - `localsend`
 - `brave`
-
