@@ -21,6 +21,12 @@
             "newline": true,
             "segments": [
                 {
+                    "type": "python",
+                    "style": "plain",
+                    "foreground": "p:lavender",
+                    "template": "{{ if .Venv }}(  {{ .Venv }}) {{ end }}"
+                },
+                {
                     "type": "session",
                     "style": "plain",
                     "foreground": "p:pink",
