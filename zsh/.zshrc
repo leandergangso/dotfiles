@@ -1,3 +1,7 @@
+# profiling init
+#zmodload zsh/zprof
+
+# simple plugin manager
 Z_PLUGIN_DIR="$HOME/.local/share/zsh/plugins"
 
 function plugin-load {
@@ -26,6 +30,13 @@ export GOPRIVATE=github.com/leandergangso
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin
 
+# zstyles
+zstyle ':completion:*' matcher-list "m:{a-z}={A-Za-z}"
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
 # plugins
 repos=(
   https://github.com/zsh-users/zsh-history-substring-search
@@ -37,14 +48,7 @@ repos=(
 plugin-load $repos
 
 # completions
-autoload -U compinit && compinit
-
-# zstyles
-zstyle ':completion:*' matcher-list "m:{a-z}={A-Za-z}"
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+autoload -Uz compinit && compinit -i
 
 # history
 HISTSIZE=50000
@@ -60,6 +64,7 @@ setopt HIST_SAVE_NO_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt HIST_NO_STORE
+#setopt HIST_VERIFY
 setopt PUSHD_IGNORE_DUPS
 setopt EXTENDED_HISTORY
 setopt INC_APPEND_HISTORY_TIME
@@ -83,6 +88,7 @@ zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
 # aliases
+alias fix_history='mv ~/.zsh_history ~/.zsh_history_bad && strings ~/.zsh_history_bad > ~/.zsh_history && rm ~/.zsh_history_bad && fc -R ~/.zsh_history'
 alias hist='history -i'
 alias cls='clear'
 alias vim='nvim'
@@ -110,7 +116,6 @@ alias gp='git push'
 alias gl='git pull'
 alias glo='git log --all --oneline --decorate --graph'
 
-# flatpak
 alias bruno='flatpak run com.usebruno.Bruno'
 
 # integrations
@@ -125,3 +130,6 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
+
+# profiling (when using, ensure zprof is initialized)
+#zprof
