@@ -47,21 +47,22 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # history
-HISTSIZE=20000
+HISTSIZE=50000
 HISTFILE=~/.zsh_history
-SAVEHIST=$HISTSIZE
-HISTDUP=erase
+SAVEHIST=100000
 
 # options
-setopt auto_cd
-setopt appendhistory
-setopt sharehistory
-setopt hist_ignore_space
-setopt hist_ignore_dups
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-setopt hist_find_no_dups
-setopt pushd_ignore_dups
+setopt AUTO_CD
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_NO_STORE
+setopt PUSHD_IGNORE_DUPS
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY_TIME
 
 # keybinds
 bindkey -e
@@ -82,6 +83,7 @@ zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
 # aliases
+alias hist='history -i'
 alias cls='clear'
 alias vim='nvim'
 alias cat='bat --paging=never'
