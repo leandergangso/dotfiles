@@ -1,9 +1,11 @@
-# profiling init
+# init profiling
 #zmodload zsh/zprof
 
-# simple plugin manager
+# variables
 Z_PLUGIN_DIR="$HOME/.local/share/zsh/plugins"
+Z_COMP_DUMP="$HOME/.zcompdump"
 
+# simple plugin manager
 function plugin-load {
     local repo plugdir initfile initfiles=()
     for repo in $@; do
@@ -39,16 +41,22 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # plugins
 repos=(
-  https://github.com/Aloxaf/fzf-tab
-  https://github.com/zsh-users/zsh-syntax-highlighting
-  https://github.com/zsh-users/zsh-history-substring-search
-  https://github.com/zsh-users/zsh-autosuggestions
-  https://github.com/zsh-users/zsh-completions
+    https://github.com/Aloxaf/fzf-tab
+    https://github.com/zsh-users/zsh-syntax-highlighting
+    https://github.com/zsh-users/zsh-history-substring-search
+    https://github.com/zsh-users/zsh-autosuggestions
+    https://github.com/zsh-users/zsh-completions
 )
 plugin-load "${repos[@]}"
 
 # completions
-autoload -U compinit && compinit
+autoload -Uz compinit
+compinit -d "$Z_COMP_DUMP"
+{
+    if [[ -s "$Z_COMP_DUMP" && (! -s "${Z_COMP_DUMP}.zwc" || "$Z_COMP_DUMP" -nt "${Z_COMP_DUMP}.zwc") ]]; then
+        zcompile "$Z_COMP_DUMP"
+    fi
+} &!
 
 # history
 HISTSIZE=50000
@@ -127,9 +135,9 @@ eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/catppuccin-mocha.jso
 # pnpm
 export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-# profiling (when using, ensure zprof is initialized)
+# run profiling (remember to init zprof when used)
 #zprof
