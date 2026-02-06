@@ -19,7 +19,7 @@ function plugin-load {
             ln -sf $initfiles[1] $initfile
         fi
         fpath+=$plugdir
-        source $initfile
+        source "$initfile"
     done
 }
 
