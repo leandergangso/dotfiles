@@ -48,7 +48,7 @@ repos=(
 plugin-load $repos
 
 # completions
-autoload -Uz compinit && compinit -i
+autoload -Uz compinit && compinit
 
 # history
 HISTSIZE=50000
