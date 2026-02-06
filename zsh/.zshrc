@@ -39,11 +39,11 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # plugins
 repos=(
+  https://github.com/Aloxaf/fzf-tab
+  https://github.com/zsh-users/zsh-syntax-highlighting
   https://github.com/zsh-users/zsh-history-substring-search
-  https://github.com/zsh-users/zsh-syntax-highlighting   
   https://github.com/zsh-users/zsh-autosuggestions
   https://github.com/zsh-users/zsh-completions
-  https://github.com/Aloxaf/fzf-tab
 )
 plugin-load "${repos[@]}"
 
