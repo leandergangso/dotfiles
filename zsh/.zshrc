@@ -45,7 +45,7 @@ repos=(
   https://github.com/zsh-users/zsh-completions
   https://github.com/Aloxaf/fzf-tab
 )
-plugin-load $repos
+plugin-load "${repos[@]}"
 
 # completions
 autoload -U compinit && compinit
