@@ -20,7 +20,7 @@ exec --no-startup-id xset s off -dpms s noblank
 # --------
 
 # application shortcuts
-bindsym $mod+Return exec wezterm
+bindsym $mod+Return exec kitty
 bindsym $mod+shift+n exec thunar
 
 # kill focused window
