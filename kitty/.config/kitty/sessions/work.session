@@ -1,0 +1,19 @@
+# --- PROJECT A: WEB FRONTEND ---
+new_tab Frontend
+layout tall
+cd /work/projects/bib
+launch nvim .
+launch echo setup stuff
+
+# --- PROJECT B: BACKEND API ---
+new_tab Backend
+layout fat
+cd /work/projects/pkg
+launch echo yay pkg
+launch echo yay other
+
+# --- PROJECT C: SYSTEM MONITORING ---
+new_tab Ops
+layout grid
+cd ~
+launch btop
