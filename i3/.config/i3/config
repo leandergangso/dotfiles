@@ -15,6 +15,9 @@ set $mod Mod4
 # disable sleep
 exec --no-startup-id xset s off -dpms s noblank
 
+# support notify-send
+exec --no-startup-id dunst
+
 # --------
 # KEYBINDS
 # --------
