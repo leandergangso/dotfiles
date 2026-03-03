@@ -2,44 +2,56 @@
 
 SESSION_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/kitty-sessionizer"
 PINNED_FILE="$SESSION_DIR/pinned.list"
-SEARCH_PATHS=("$HOME/work" "$HOME/dotfiles" "$HOME/.config")
+SEARCH_PATHS=("/work" "$HOME/dotfiles" "$HOME/.config")
 PROG="$0"
 
 mkdir -p "$SESSION_DIR"
 touch "$PINNED_FILE"
 
+clean_path() {
+    echo "${1#* }"
+}
+
 get_session_file() {
-    local project_path="$1"
-    echo "$SESSION_DIR/${project_path##*/}.session"
+    echo "$SESSION_DIR/${1##*/}.session"
 }
 
 list_sessions() {
-    # 1. Pinned Sessions (📌)
-    [[ -s "$PINNED_FILE" ]] && rg . "$PINNED_FILE" --replace '📌 $0'
+    # 📌
+    [[ -s "$PINNED_FILE" ]] && rg -v '^$' "$PINNED_FILE" | sed 's/^/📌 /'
 
-    # 2. Existing (Active) Sessions (⚡)
+    # ⚡
     local active_paths
-    active_paths=$(rg --hidden -o '^cd\s+(.*)' --replace '$1' "$SESSION_DIR"/*.session 2>/dev/null | rg -v "['\"]")
+    active_paths=$(rg --no-filename -. -o '(?<=^cd )[^\r\n]+' "$SESSION_DIR"/*.session 2>/dev/null | tr -d '"' | tr -d "'" | sort -u)
 
     if [[ -n "$active_paths" ]]; then
-        echo "$active_paths" | rg -v -F -x -f "$PINNED_FILE" | rg . --replace '⚡ $0'
+        echo "$active_paths" | rg -v -F -x -f "$PINNED_FILE" 2>/dev/null | sed 's/^/⚡ /'
     fi
 
-    # 3. Potential Projects (📁)
+    # 📁
     local exclude_file="$SESSION_DIR/.exclude_tmp"
     {
-        [[ -s "$PINNED_FILE" ]] && cat "$PINNED_FILE"
+        [[ -s "$PINNED_FILE" ]] && rg -v '^$' "$PINNED_FILE"
         [[ -n "$active_paths" ]] && echo "$active_paths"
-    } >"$exclude_file"
+    } | sort -u >"$exclude_file"
 
     fd -H -t d -d 3 '.git$' "${SEARCH_PATHS[@]}" --path-separator / --exec printf "{//}\n" |
-        rg -v -F -x -f "$exclude_file" |
-        rg . --replace '📁 $0'
+        sort -u |
+        rg -v -F -x -f "$exclude_file" 2>/dev/null |
+        sed 's/^/📁 /'
 }
 
 open_session() {
-    local project_path="$1"
-    [[ -z "$project_path" ]] && return
+    local input="$1"
+    local project_path
+
+    if [[ "$input" == /* ]]; then
+        project_path="$input"
+    else
+        project_path=$(clean_path "$input")
+    fi
+
+    [[ -z "$project_path" || ! -d "$project_path" ]] && return
 
     local session_file
     session_file=$(get_session_file "$project_path")
@@ -60,27 +72,32 @@ EOF
 }
 
 close_session() {
-    local project_path="$1"
+    local project_path
+    project_path=$(clean_path "$1")
     local session_file
     session_file=$(get_session_file "$project_path")
     kitten @ action close_session "$session_file" && rm -f "$session_file"
 }
 
 toggle_pin() {
-    local path="$1"
+    local path
+    path=$(clean_path "$1")
+
     if rg -qFx "$path" "$PINNED_FILE"; then
         local tmp
         tmp=$(rg -vFx "$path" "$PINNED_FILE")
-        echo "$tmp" >"$PINNED_FILE"
+        echo "$tmp" | rg -v '^$' >"$PINNED_FILE"
     else
         echo "$path" >>"$PINNED_FILE"
     fi
 }
 
 move_pin() {
-    local path="$1"
+    local path
+    path=$(clean_path "$1")
     local direction="$2"
-    mapfile -t pins <"$PINNED_FILE"
+
+    mapfile -t pins < <(rg -v '^$' "$PINNED_FILE")
 
     local idx=-1
     for i in "${!pins[@]}"; do
@@ -105,7 +122,7 @@ move_pin() {
         pins[idx]="$tmp"
     fi
 
-    printf "%s\n" "${pins[@]}" >"$PINNED_FILE"
+    printf "%s\n" "${pins[@]}" | rg -v '^$' >"$PINNED_FILE"
 }
 
 case "$1" in
@@ -113,17 +130,16 @@ case "$1" in
     list_sessions
     ;;
 "close")
-    close_session "${2#* }"
+    close_session "$2"
     ;;
 "toggle")
-    toggle_pin "${2#* }"
+    toggle_pin "$2"
     ;;
 "move")
-    move_pin "${2#* }" "$3"
+    move_pin "$2" "$3"
     ;;
 "jump")
-    # Jump to specific pin number
-    target_path=$(sed -n "${2}p" "$PINNED_FILE")
+    target_path=$(rg -v '^$' "$PINNED_FILE" | sed -n "${2}p")
     [[ -n "$target_path" ]] && open_session "$target_path"
     ;;
 "ui")
@@ -137,7 +153,7 @@ case "$1" in
             --bind "ctrl-j:execute($PROG move {} down)+reload($PROG list)+down" \
             --bind "ctrl-x:execute($PROG close {})+reload($PROG list)"
     )
-    [[ -n "$selected" ]] && open_session "${selected#* }"
+    [[ -n "$selected" ]] && open_session "$selected"
     ;;
 *)
     "$PROG" ui
