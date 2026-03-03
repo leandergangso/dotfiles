@@ -13,6 +13,13 @@ get_project_name() {
     echo "$base" | sed -E 's/[-_]/ /g' | awk '{for(i=1;i<=NF;i++)sub(/./,toupper(substr($i,1,1)),$i)}1'
 }
 
+get_session_file() {
+    local project_path="$1"
+    [[ -z "$project_path" ]] && return
+
+    echo "$SESSION_DIR/$(basename "$project_path").session"
+}
+
 get_active_paths() {
     # 1. Get all OS windows
     # 2. Filter for those that have a --session argument
@@ -56,7 +63,7 @@ open_session() {
     [[ -z "$project_path" ]] && return
 
     local session_file
-    session_file="$SESSION_DIR/$(basename "$project_path").session"
+    session_file=$(get_session_file "$project_path")
 
     # Create session file on the fly if missing
     if [[ ! -f "$session_file" ]]; then
@@ -75,7 +82,10 @@ EOF
 }
 
 close_session() {
-    kitten @ action close_session "$1.session"
+    local project_path="$1"
+    local session_file
+    session_file=$(get_session_file "$project_path")
+    kitten @ action close_session "$session_file"
 }
 
 toggle_pin() {
@@ -135,11 +145,11 @@ case "$1" in
             --reverse \
             --delimiter " " \
             --bind "ctrl-p:execute($prog toggle {2})+reload($prog list)" \
-            --bind "ctrl-k:execute($prog move {2} up)+reload($prog list)" \
-            --bind "ctrl-j:execute($prog move {2} down)+reload($prog list)" \
-            --bind "ctrl-x:execute($prog close {2})" \
+            --bind "ctrl-k:execute($prog move {2} up)+reload($prog list)+up" \
+            --bind "ctrl-j:execute($prog move {2} down)+reload($prog list)+down" \
+            --bind "ctrl-x:execute($prog close {2})"
     )
-        [[ -n "$selected" ]] && open_session "${selected#* }"
+    [[ -n "$selected" ]] && open_session "${selected#* }"
     ;;
 *)
     "$prog" ui
