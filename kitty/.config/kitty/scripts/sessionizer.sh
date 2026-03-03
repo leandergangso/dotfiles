@@ -1,61 +1,40 @@
 #!/usr/bin/env bash
 
-SESSION_DIR="$HOME/.cache/kitty-sessions"
+SESSION_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/kitty-sessionizer"
 PINNED_FILE="$SESSION_DIR/pinned.list"
-SEARCH_PATHS=("/work" "$HOME/dotfiles" "$HOME/.config")
+SEARCH_PATHS=("$HOME/work" "$HOME/dotfiles" "$HOME/.config")
+PROG="$0"
 
 mkdir -p "$SESSION_DIR"
 touch "$PINNED_FILE"
 
-get_project_name() {
-    local base
-    base=$(basename "$1")
-    echo "$base" | sed -E 's/[-_]/ /g' | awk '{for(i=1;i<=NF;i++)sub(/./,toupper(substr($i,1,1)),$i)}1'
-}
-
 get_session_file() {
     local project_path="$1"
-    [[ -z "$project_path" ]] && return
-
-    echo "$SESSION_DIR/$(basename "$project_path").session"
-}
-
-get_active_paths() {
-    # 1. Get all OS windows
-    # 2. Filter for those that have a --session argument
-    # 3. Extract the session file path
-    # 4. Use grep to pull the 'cd' line from that session file
-    kitten @ ls | jq -r '.[].tabs[].windows[].cmdline | select(. != null) | .[index("--session") + 1] // empty' 2>/dev/null |
-        while read -r session_file; do
-            if [ -f "$session_file" ]; then
-                grep -oP '(?<=cd ).*' "$session_file"
-            fi
-        done | sort -u
+    echo "$SESSION_DIR/${project_path##*/}.session"
 }
 
 list_sessions() {
-    local active_list
-    active_list=$(get_active_paths)
+    # 1. Pinned Sessions (📌)
+    [[ -s "$PINNED_FILE" ]] && rg . "$PINNED_FILE" --replace '📌 $0'
 
-    # Pinned (📌)
-    while IFS= read -r line; do
-        [[ -n "$line" ]] && echo "📌 $line"
-    done <"$PINNED_FILE"
+    # 2. Existing (Active) Sessions (⚡)
+    local active_paths
+    active_paths=$(rg --hidden -o '^cd\s+(.*)' --replace '$1' "$SESSION_DIR"/*.session 2>/dev/null | rg -v "['\"]")
 
-    # Active but not pinned (⚡)
-    echo "$active_list" | while read -r dir; do
-        [[ -z "$dir" ]] && continue
-        if ! grep -qFx "$dir" "$PINNED_FILE"; then
-            echo "⚡ $dir"
-        fi
-    done
+    if [[ -n "$active_paths" ]]; then
+        echo "$active_paths" | rg -v -F -x -f "$PINNED_FILE" | rg . --replace '⚡ $0'
+    fi
 
-    # Rest of projects (📁)
-    fd -H -t d -d 3 '.git$' "${SEARCH_PATHS[@]}" | xargs -I {} dirname {} | sort -u | while read -r dir; do
-        if ! grep -qFx "$dir" "$PINNED_FILE" && ! echo "$active_list" | grep -qFx "$dir"; then
-            echo "📁 $dir"
-        fi
-    done
+    # 3. Potential Projects (📁)
+    local exclude_file="$SESSION_DIR/.exclude_tmp"
+    {
+        [[ -s "$PINNED_FILE" ]] && cat "$PINNED_FILE"
+        [[ -n "$active_paths" ]] && echo "$active_paths"
+    } >"$exclude_file"
+
+    fd -H -t d -d 3 '.git$' "${SEARCH_PATHS[@]}" --path-separator / --exec printf "{//}\n" |
+        rg -v -F -x -f "$exclude_file" |
+        rg . --replace '📁 $0'
 }
 
 open_session() {
@@ -65,7 +44,6 @@ open_session() {
     local session_file
     session_file=$(get_session_file "$project_path")
 
-    # Create session file on the fly if missing
     if [[ ! -f "$session_file" ]]; then
         cat <<EOF >"$session_file"
 layout tall
@@ -85,13 +63,15 @@ close_session() {
     local project_path="$1"
     local session_file
     session_file=$(get_session_file "$project_path")
-    kitten @ action close_session "$session_file"
+    kitten @ action close_session "$session_file" && rm -f "$session_file"
 }
 
 toggle_pin() {
     local path="$1"
-    if grep -qFx "$path" "$PINNED_FILE"; then
-        grep -vFx "$path" "$PINNED_FILE" >"$PINNED_FILE.tmp" && mv "$PINNED_FILE.tmp" "$PINNED_FILE"
+    if rg -qFx "$path" "$PINNED_FILE"; then
+        local tmp
+        tmp=$(rg -vFx "$path" "$PINNED_FILE")
+        echo "$tmp" >"$PINNED_FILE"
     else
         echo "$path" >>"$PINNED_FILE"
     fi
@@ -100,58 +80,66 @@ toggle_pin() {
 move_pin() {
     local path="$1"
     local direction="$2"
-    local line_num
-    line_num=$(grep -nFx "$path" "$PINNED_FILE" | cut -d: -f1)
-    [[ -z "$line_num" ]] && return
+    mapfile -t pins <"$PINNED_FILE"
 
-    if [[ "$direction" == "up" && "$line_num" -gt 1 ]]; then
-        local target=$((line_num - 1))
-        sed -i "${target}{h;d;}; ${line_num}{G;}" "$PINNED_FILE"
-
-    elif [[ "$direction" == "down" ]]; then
-        local total
-        total=$(wc -l <"$PINNED_FILE")
-        if [[ "$line_num" -lt "$total" ]]; then
-            local target=$((line_num + 1))
-            sed -i "${line_num}{h;d;}; ${target}{G;}" "$PINNED_FILE"
+    local idx=-1
+    for i in "${!pins[@]}"; do
+        if [[ "${pins[$i]}" == "$path" ]]; then
+            idx=$i
+            break
         fi
-    fi
-}
+    done
 
-prog="$0"
+    [[ $idx -eq -1 ]] && return
+
+    if [[ "$direction" == "up" && $idx -gt 0 ]]; then
+        local prev=$((idx - 1))
+        local tmp="${pins[$prev]}"
+        pins[prev]="${pins[$idx]}"
+        pins[idx]="$tmp"
+
+    elif [[ "$direction" == "down" && $idx -lt $((${#pins[@]} - 1)) ]]; then
+        local next=$((idx + 1))
+        local tmp="${pins[$next]}"
+        pins[next]="${pins[$idx]}"
+        pins[idx]="$tmp"
+    fi
+
+    printf "%s\n" "${pins[@]}" >"$PINNED_FILE"
+}
 
 case "$1" in
 "list")
     list_sessions
     ;;
 "close")
-    close_session "$2"
+    close_session "${2#* }"
     ;;
 "toggle")
-    toggle_pin "$2"
+    toggle_pin "${2#* }"
     ;;
 "move")
-    move_pin "$2" "$3"
+    move_pin "${2#* }" "$3"
     ;;
 "jump")
+    # Jump to specific pin number
     target_path=$(sed -n "${2}p" "$PINNED_FILE")
-    [ -n "$target_path" ] && open_session "$target_path"
+    [[ -n "$target_path" ]] && open_session "$target_path"
     ;;
 "ui")
     selected=$(
-        "$prog" list | fzf \
-            --header "ENTER: Open | CTRL-P: Pin | CTRL-K/J: Move | CTRL-X: Close" \
+        "$PROG" list | fzf \
             --ansi \
             --reverse \
-            --delimiter " " \
-            --bind "ctrl-p:execute($prog toggle {2})+reload($prog list)" \
-            --bind "ctrl-k:execute($prog move {2} up)+reload($prog list)+up" \
-            --bind "ctrl-j:execute($prog move {2} down)+reload($prog list)+down" \
-            --bind "ctrl-x:execute($prog close {2})"
+            --header "ENTER: Open | CTRL-P: Pin | CTRL-K/J: Move | CTRL-X: Close" \
+            --bind "ctrl-p:execute($PROG toggle {})+reload($PROG list)" \
+            --bind "ctrl-k:execute($PROG move {} up)+reload($PROG list)+up" \
+            --bind "ctrl-j:execute($PROG move {} down)+reload($PROG list)+down" \
+            --bind "ctrl-x:execute($PROG close {})+reload($PROG list)"
     )
     [[ -n "$selected" ]] && open_session "${selected#* }"
     ;;
 *)
-    "$prog" ui
+    "$PROG" ui
     ;;
 esac
