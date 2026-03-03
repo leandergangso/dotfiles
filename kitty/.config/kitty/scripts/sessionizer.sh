@@ -17,33 +17,39 @@ get_session_file() {
 }
 
 list_sessions() {
-    # 📌
+    # 1. 📌 Pinned
     [[ -s "$PINNED_FILE" ]] && rg -v '^$' "$PINNED_FILE" | sed 's/^/📌 /'
 
-    # ⚡
+    # 2. ⚡ Active
     local active_paths
-    active_paths=$(rg --no-filename -. -o '(?<=^cd )[^\r\n]+' "$SESSION_DIR"/*.session 2>/dev/null | tr -d '"' | tr -d "'" | sort -u)
+    active_paths=$(rg -IN -. -o "^cd\s+['\"]?([^'\"]+)['\"]?" --replace '$1' "$SESSION_DIR"/*.session 2>/dev/null | sed 's#/$##' | sort -u)
 
     if [[ -n "$active_paths" ]]; then
-        echo "$active_paths" | rg -v -F -x -f "$PINNED_FILE" 2>/dev/null | sed 's/^/⚡ /'
+        if [[ -s "$PINNED_FILE" ]]; then
+            echo "$active_paths" | rg -v -F -x -f "$PINNED_FILE" 2>/dev/null | sed 's/^/⚡ /'
+        else
+            printf '⚡ %s\n' "$active_paths"
+        fi
     fi
 
-    # 📁
-    local exclude_file="$SESSION_DIR/.exclude_tmp"
-    {
+    # 3. 📁 Potential
+    local exclude_patterns
+    exclude_patterns=$(
         [[ -s "$PINNED_FILE" ]] && rg -v '^$' "$PINNED_FILE"
         [[ -n "$active_paths" ]] && echo "$active_paths"
-    } | sort -u >"$exclude_file"
+    )
 
     fd -H -t d -d 3 '.git$' "${SEARCH_PATHS[@]}" --path-separator / --exec printf "{//}\n" |
+        sed 's#/$##' |
         sort -u |
-        rg -v -F -x -f "$exclude_file" 2>/dev/null |
+        rg -v -F -x -f <(echo "$exclude_patterns") 2>/dev/null |
         sed 's/^/📁 /'
 }
 
 open_session() {
-    local input="$1"
+    local input
     local project_path
+    input="$1"
 
     if [[ "$input" == /* ]]; then
         project_path="$input"
@@ -73,18 +79,18 @@ EOF
 
 close_session() {
     local project_path
-    project_path=$(clean_path "$1")
     local session_file
+    project_path=$(clean_path "$1")
     session_file=$(get_session_file "$project_path")
     kitten @ action close_session "$session_file" && rm -f "$session_file"
 }
 
 toggle_pin() {
     local path
+    local tmp
     path=$(clean_path "$1")
 
     if rg -qFx "$path" "$PINNED_FILE"; then
-        local tmp
         tmp=$(rg -vFx "$path" "$PINNED_FILE")
         echo "$tmp" | rg -v '^$' >"$PINNED_FILE"
     else
@@ -93,69 +99,72 @@ toggle_pin() {
 }
 
 move_pin() {
-    local path
+    local path direction i idx target tmp pins
+
+    # NOTE: bug? can move line down into active sessions, but not other projects...
+
     path=$(clean_path "$1")
-    local direction="$2"
+    direction="$2"
 
     mapfile -t pins < <(rg -v '^$' "$PINNED_FILE")
 
-    local idx=-1
+    idx=-1
     for i in "${!pins[@]}"; do
-        if [[ "${pins[$i]}" == "$path" ]]; then
+        if [[ "${pins[i]}" == "$path" ]]; then
             idx=$i
             break
         fi
     done
 
-    [[ $idx -eq -1 ]] && return
+    [[ idx -eq -1 ]] && return
 
-    if [[ "$direction" == "up" && $idx -gt 0 ]]; then
-        local prev=$((idx - 1))
-        local tmp="${pins[$prev]}"
-        pins[prev]="${pins[$idx]}"
-        pins[idx]="$tmp"
-
-    elif [[ "$direction" == "down" && $idx -lt $((${#pins[@]} - 1)) ]]; then
-        local next=$((idx + 1))
-        local tmp="${pins[$next]}"
-        pins[next]="${pins[$idx]}"
-        pins[idx]="$tmp"
+    target=-1
+    if [[ "$direction" == "up" && idx -gt 0 ]]; then
+        target=$((idx - 1))
+    elif [[ "$direction" == "down" && idx -lt ${#pins[@]}-1 ]]; then
+        target=$((idx + 1))
     fi
 
-    printf "%s\n" "${pins[@]}" | rg -v '^$' >"$PINNED_FILE"
+    if [[ "$target" -ne -1 ]]; then
+        tmp="${pins[target]}"
+        pins[target]="${pins[idx]}"
+        pins[idx]="$tmp"
+
+        printf "%s\n" "${pins[@]}" | rg -v '^$' >"$PINNED_FILE"
+    fi
 }
 
-case "$1" in
-"list")
-    list_sessions
-    ;;
-"close")
-    close_session "$2"
-    ;;
-"toggle")
-    toggle_pin "$2"
-    ;;
-"move")
-    move_pin "$2" "$3"
-    ;;
-"jump")
-    target_path=$(rg -v '^$' "$PINNED_FILE" | sed -n "${2}p")
+jump_to_pin() {
+    local index
+    local target_path
+    index="$1"
+    target_path=$(awk "NF { count++; if (count == $index) print }" "$PINNED_FILE")
     [[ -n "$target_path" ]] && open_session "$target_path"
-    ;;
-"ui")
+}
+
+run_ui() {
+    local selected
     selected=$(
         "$PROG" list | fzf \
             --ansi \
             --reverse \
+            --ignore-case \
             --header "ENTER: Open | CTRL-P: Pin | CTRL-K/J: Move | CTRL-X: Close" \
             --bind "ctrl-p:execute($PROG toggle {})+reload($PROG list)" \
+            --bind "ctrl-x:execute($PROG close {})+reload($PROG list)" \
             --bind "ctrl-k:execute($PROG move {} up)+reload($PROG list)+up" \
             --bind "ctrl-j:execute($PROG move {} down)+reload($PROG list)+down" \
-            --bind "ctrl-x:execute($PROG close {})+reload($PROG list)"
+            --bind "k:up" \
+            --bind "j:down"
     )
     [[ -n "$selected" ]] && open_session "$selected"
-    ;;
-*)
-    "$PROG" ui
-    ;;
+}
+
+case "$1" in
+"list") list_sessions ;;
+"close") close_session "$2" ;;
+"toggle") toggle_pin "$2" ;;
+"move") move_pin "$2" "$3" ;;
+"jump") jump_to_pin "$2" ;;
+"ui" | *) run_ui ;;
 esac
