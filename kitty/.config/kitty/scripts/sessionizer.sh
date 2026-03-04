@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SESSION_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/kitty-sessionizer"
+SESSION_DIR="$HOME/.config/kitty/sessions"
 PINNED_FILE="$SESSION_DIR/pinned.list"
 SEARCH_PATHS=("/work" "$HOME/dotfiles" "$HOME/.config")
 PROG="$0"
@@ -23,7 +23,6 @@ list_sessions() {
     # 2. ⚡ Active
     local active_paths
     active_paths=$(rg -IN -. -o "^cd\s+['\"]?([^'\"]+)['\"]?" --replace '$1' "$SESSION_DIR"/*.session 2>/dev/null | sed 's#/$##' | sort -u)
-
     if [[ -n "$active_paths" ]]; then
         if [[ -s "$PINNED_FILE" ]]; then
             echo "$active_paths" | rg -v -F -x -f "$PINNED_FILE" 2>/dev/null | sed 's/^/⚡ /'
