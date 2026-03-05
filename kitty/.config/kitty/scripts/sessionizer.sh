@@ -17,32 +17,31 @@ get_session_file() {
 }
 
 list_sessions() {
-    # 1. 📌 Pinned
-    [[ -s "$PINNED_FILE" ]] && rg -v '^$' "$PINNED_FILE" | sed 's/^/📌 /'
+    # Pinned Sessions
+    local pinned=""
+    if [[ -f "$PINNED_FILE" ]]; then
+        pinned=$(cat "$PINNED_FILE")
+        sed 's/^/📌 /' "$PINNED_FILE"
+    fi
 
-    # 2. ⚡ Active
-    local active_paths
-    active_paths=$(rg -IN -. -o "^cd\s+['\"]?([^'\"]+)['\"]?" --replace '$1' "$SESSION_DIR"/*.session 2>/dev/null | sed 's#/$##' | sort -u)
-    if [[ -n "$active_paths" ]]; then
-        if [[ -s "$PINNED_FILE" ]]; then
-            echo "$active_paths" | rg -v -F -x -f "$PINNED_FILE" 2>/dev/null | sed 's/^/⚡ /'
-        else
-            printf '⚡ %s\n' "$active_paths"
+    # Active Sessions
+    local active=""
+    if [[ -d "$SESSION_DIR" ]]; then
+        active=$(
+            rg --no-filename --no-line-number --max-count 1 "^cd\s+(.*)" \
+                --glob "*.session" --glob "!keep-*" \
+                --replace "\$1" "$SESSION_DIR"
+        )
+        if [[ -n "$active" ]]; then
+            echo "$active" | rg -vxFf <(echo -e "$pinned") | sed 's/^/⚡ /' | sort -u
         fi
     fi
 
-    # 3. 📁 Potential
-    local exclude_patterns
-    exclude_patterns=$(
-        [[ -s "$PINNED_FILE" ]] && rg -v '^$' "$PINNED_FILE"
-        [[ -n "$active_paths" ]] && echo "$active_paths"
-    )
-
-    fd -H -t d -d 3 '.git$' "${SEARCH_PATHS[@]}" --path-separator / --exec printf "{//}\n" |
-        sed 's#/$##' |
-        sort -u |
-        rg -v -F -x -f <(echo "$exclude_patterns") 2>/dev/null |
-        sed 's/^/📁 /'
+    # Potential Sessions
+    fd --hidden --type directory --max-depth 4 --glob '.git' "${SEARCH_PATHS[@]}" --exec dirname |
+        rg -vxFf <(echo -e "$pinned\n$active") |
+        sed 's/^/📁 /' |
+        sort -u
 }
 
 open_session() {
@@ -86,27 +85,28 @@ close_session() {
 
 toggle_pin() {
     local path
-    local tmp
     path=$(clean_path "$1")
-
-    if rg -qFx "$path" "$PINNED_FILE"; then
-        tmp=$(rg -vFx "$path" "$PINNED_FILE")
-        echo "$tmp" | rg -v '^$' >"$PINNED_FILE"
+    if rg -qFx "$path" "$PINNED_FILE" 2>/dev/null; then
+        local filtered
+        filtered=$(rg -vFx "$path" "$PINNED_FILE" | rg -v '^$')
+        if [[ -n "$filtered" ]]; then
+            printf "%s\n" "$filtered" >"$PINNED_FILE"
+        else
+            : >"$PINNED_FILE"
+        fi
     else
-        echo "$path" >>"$PINNED_FILE"
+        printf "%s\n" "$path" >>"$PINNED_FILE"
     fi
 }
 
 move_pin() {
-    local path direction i idx target tmp pins
+    local path=$1 direction=$2 pins idx target
+    path=$(clean_path "$path")
 
-    # NOTE: bug? can move line down into active sessions, but not other projects...
+    # 1. Load ONLY pinned items (removes any accidental blanks)
+    mapfile -t pins < <(rg -v '^$' "$PINNED_FILE" 2>/dev/null)
 
-    path=$(clean_path "$1")
-    direction="$2"
-
-    mapfile -t pins < <(rg -v '^$' "$PINNED_FILE")
-
+    # 2. Find the index (using a more modern Bash loop)
     idx=-1
     for i in "${!pins[@]}"; do
         if [[ "${pins[i]}" == "$path" ]]; then
@@ -115,29 +115,30 @@ move_pin() {
         fi
     done
 
-    [[ idx -eq -1 ]] && return
+    # If the path isn't in the pinned file, we stop.
+    # This prevents moving "Active" or "Potential" projects.
+    [[ $idx -eq -1 ]] && return
 
-    target=-1
-    if [[ "$direction" == "up" && idx -gt 0 ]]; then
+    # 3. Calculate target
+    if [[ "$direction" == "up" && $idx -gt 0 ]]; then
         target=$((idx - 1))
-    elif [[ "$direction" == "down" && idx -lt ${#pins[@]}-1 ]]; then
+    elif [[ "$direction" == "down" && $idx -lt $((${#pins[@]} - 1)) ]]; then
         target=$((idx + 1))
+    else
+        return # Nowhere to move (already at top/bottom)
     fi
 
-    if [[ "$target" -ne -1 ]]; then
-        tmp="${pins[target]}"
-        pins[target]="${pins[idx]}"
-        pins[idx]="$tmp"
+    # 4. Swap in the array
+    local tmp="${pins[target]}"
+    pins[target]="${pins[idx]}"
+    pins[idx]="$tmp"
 
-        printf "%s\n" "${pins[@]}" | rg -v '^$' >"$PINNED_FILE"
-    fi
+    printf "%s\n" "${pins[@]}" >"$PINNED_FILE"
 }
 
 jump_to_pin() {
-    local index
     local target_path
-    index="$1"
-    target_path=$(awk "NF { count++; if (count == $index) print }" "$PINNED_FILE")
+    target_path=$(sed -n "${1}p" "$PINNED_FILE")
     [[ -n "$target_path" ]] && open_session "$target_path"
 }
 
