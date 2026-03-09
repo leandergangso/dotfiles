@@ -63,11 +63,14 @@ open_session() {
     if [[ ! -f "$session_file" ]]; then
         cat <<EOF >"$session_file"
 layout tall
+
 cd $project_path
 launch --hold nvim
+
 new_tab
 cd $project_path
 launch
+
 focus_tab 0
 EOF
     fi
