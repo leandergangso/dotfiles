@@ -97,6 +97,7 @@ bindkey "^x^e" edit-command-line
 
 # aliases
 alias fix_history="mv ~/.zsh_history ~/.zsh_history_bad && strings ~/.zsh_history_bad > ~/.zsh_history && rm ~/.zsh_history_bad && fc -R ~/.zsh_history"
+alias ssh="TERM=xterm-256color ssh"
 alias hist="history -in"
 alias cls="clear"
 alias vim="nvim"
