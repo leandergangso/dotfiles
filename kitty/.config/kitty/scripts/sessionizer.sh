@@ -57,6 +57,8 @@ open_session() {
 
     [[ -z "$project_path" || ! -d "$project_path" ]] && return
 
+    project_path=$(realpath "$project_path")
+
     local session_file
     session_file=$(get_session_file "$project_path")
 
