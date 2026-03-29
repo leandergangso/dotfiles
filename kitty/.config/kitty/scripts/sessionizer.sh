@@ -67,10 +67,6 @@ open_session() {
 layout tall
 
 cd $project_path
-launch --hold nvim
-
-new_tab
-cd $project_path
 launch
 
 focus_tab 0
