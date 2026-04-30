@@ -30,6 +30,7 @@ export EDITOR="$(command -v nvim &>/dev/null && echo nvim || echo vim)"
 export WORDCHARS="${WORDCHARS/\/}"
 export GOPRIVATE="github.com/leandergangso"
 export PATH="$PATH:$HOME/go/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin"
 
 # zstyles
