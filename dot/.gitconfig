@@ -11,7 +11,12 @@
 [init]
 	defaultBranch = main
 [core]
-	pager="less -FX"
+    #pager = "less -FX"
+    pager = "delta"
+[delta]
+    navigate = true
+    line-numbers = true
+    side-by-side = true
 [pull]
 	rebase = true
 [url "git@github.com:"]
