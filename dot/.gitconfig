@@ -11,8 +11,8 @@
 [init]
 	defaultBranch = main
 [core]
-    #pager = "less -FX"
-    pager = "delta"
+    pager = "less -FX"
+    #pager = "delta"
 [delta]
     navigate = true
     line-numbers = true
