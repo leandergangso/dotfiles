@@ -22,11 +22,9 @@
       "segments": [
         {
           "type": "nix-shell",
-          "style": "powerline",
-          "powerline_symbol": "",
-          "foreground": "#ffffff",
-          "background": "#7ebae4",
-          "template": "   "
+          "style": "plain",
+          "foreground": "p:blue",
+          "template": "\uf313 "
         },
         {
           "type": "python",
