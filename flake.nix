@@ -27,7 +27,7 @@
           oh-my-posh
           #base-devel
           i3
-          i3-lock
+          i3lock
           go
           go-task
           neovim
