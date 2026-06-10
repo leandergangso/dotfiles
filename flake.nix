@@ -23,6 +23,7 @@
           htop
           btop
           stow
+          ncdu
           zoxide
           oh-my-posh
           #base-devel
