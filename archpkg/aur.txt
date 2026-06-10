@@ -1,0 +1,6 @@
+brave-bin
+google-chrome
+localsend-bin
+neofetch
+oh-my-posh
+yay

@@ -1,0 +1,14 @@
+base-devel
+git
+curl
+wget
+pipewire
+pipewire-pulse
+wireplumber
+docker
+docker-compose
+podman
+podman-compose
+nvidia
+mesa
+vulkan-tools
