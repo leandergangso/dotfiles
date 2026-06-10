@@ -26,6 +26,7 @@ function plugin-load {
 }
 
 # exports
+export TERM="xterm-256color"
 export EDITOR="$(command -v nvim &>/dev/null && echo nvim || echo vim)"
 export WORDCHARS="${WORDCHARS/\/}"
 export GOPRIVATE="github.com/leandergangso"
