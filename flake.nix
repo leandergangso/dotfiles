@@ -24,7 +24,7 @@
           btop
           stow
           zoxide
-          ohmyposh
+          oh-my-posh
           #base-devel
           i3
           i3-lock
