@@ -35,6 +35,8 @@
           docker-compose
           podman
           podman-compose
+          brave
+          localsend
         ];
       };
     };
