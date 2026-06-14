@@ -1,3 +1,6 @@
 layout tall
+
 cd $HOME
 launch
+
+focus_tab 0
