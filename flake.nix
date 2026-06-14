@@ -24,7 +24,6 @@
         tree
         btop
         ncdu
-        stow
         yazi
         procs
         dogdns
