@@ -6,12 +6,3 @@ local names = vim.tbl_map(function(config)
 end, configs)
 
 vim.lsp.enable(names)
-
---vim.lsp.enable({
---	"lua_ls",
---	"gopls",
---	"cssls",
---	"svelte",
---	"tailwindcss",
---	"ts_ls",
---})

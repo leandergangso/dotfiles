@@ -3,9 +3,10 @@ vim.pack.add({
 })
 
 local alpha = require("alpha")
-local dashboard = require("alpha.themes.startify")
+local theme = require("alpha.themes.theta")
+local dashboard = require("alpha.themes.dashboard")
 
-dashboard.section.header.val = {
+theme.header.val = {
 	[[                                                                     ]],
 	[[       ████ ██████           █████      ██                     ]],
 	[[      ███████████             █████                             ]],
@@ -16,10 +17,36 @@ dashboard.section.header.val = {
 	[[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
 }
 
-dashboard.section.top_buttons.val = {
-	dashboard.button("h", "Check health", "<cmd>checkhealth<CR>"),
-	dashboard.button("p", "Plugin health", "<cmd>checkhealth vim.pack<CR>"),
-	dashboard.button("u", "Update plugins", "<cmd>lua vim.pack.update()<CR>"),
+theme.buttons.val = {
+	{ type = "text", val = "Quick actions", opts = { hl = "SpecialComment", position = "center" } },
+	{ type = "padding", val = 1 },
+	dashboard.button("n", "  New file", "<cmd>ene<CR>"),
+	dashboard.button("H", "󰒡  Check health", "<cmd>checkhealth<CR>"),
+	dashboard.button("P", "󰒓  Plugin health", "<cmd>checkhealth vim.pack<CR>"),
+	dashboard.button("L", "󰈚  List all plugins", "<cmd>lua require('pack').list()<CR>"),
+	dashboard.button("D", "  Prune plugins", "<cmd>lua require('pack').prune()<CR>"),
+	dashboard.button("U", "󰚰  Upgrade plugins", "<cmd>lua vim.pack.update()<CR>"),
+	dashboard.button("q", "󰅙  Quit", "<cmd>qa<CR>"),
 }
 
-alpha.setup(dashboard.opts)
+table.insert(theme.config.layout, {
+	type = "padding",
+	val = 2,
+})
+
+table.insert(theme.config.layout, {
+	type = "text",
+	val = function()
+		return "nvim "
+			.. vim.version().major
+			.. "."
+			.. vim.version().minor
+			.. "."
+			.. vim.version().patch
+			.. "  |  "
+			.. (vim.g.pack_startup_summary or "pkgs not loaded yet")
+	end,
+	opts = { position = "center", hl = "SpecialComment" },
+})
+
+alpha.setup(theme.config)

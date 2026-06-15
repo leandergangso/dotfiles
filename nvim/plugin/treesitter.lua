@@ -3,36 +3,11 @@ vim.pack.add({
 	"https://github.com/nvim-treesitter/nvim-treesitter-context",
 })
 
--- NOTE: use this once NIX handles all parser installs
---vim.api.nvim_create_autocmd("FileType", {
---	callback = function(args)
---		pcall(vim.treesitter.start, args.buf)
---	end,
---})
-
-local parsers = {
-	"lua",
-	"html",
-	"css",
-	"vimdoc",
-	"jsdoc",
-	"bash",
-	"go",
-	-- "astro",
-	-- "svelte",
-	-- "python",
-	-- "javascript",
-	-- "typescript",
-}
-
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = parsers,
-	callback = function()
-		vim.treesitter.start()
+	callback = function(args)
+		pcall(vim.treesitter.start, args.buf)
 	end,
 })
-
-require("nvim-treesitter").install(parsers)
 
 require("treesitter-context").setup({
 	enable = true,

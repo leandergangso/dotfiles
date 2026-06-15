@@ -1,6 +1,6 @@
 # Personal Neovim config
 
-![vim meme](hacks/vim-neo.jpg)
+![vim meme](scripts/vim-neo.jpg)
 
 ## Prerequisite
 

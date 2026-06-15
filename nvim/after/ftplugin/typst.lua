@@ -1,7 +1,7 @@
 if vim.g.typst_preview_plugin then
 	return
 end
-vim.g.tynst_preview_plugin = true
+vim.g.typst_preview_plugin = true
 
 vim.pack.add({
 	"https://github.com/chomosuke/typst-preview.nvim",
