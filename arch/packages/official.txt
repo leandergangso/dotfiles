@@ -1,13 +1,13 @@
-# gui
+# ui
 
 thunar
+ttf-jetbrains-mono-nerd
 
 # common
 
-base
-base-devel
 fd
 fq
+jq
 yq
 age
 git
@@ -27,9 +27,12 @@ yazi
 xclip
 kitty
 strace
+zoxide
+lazygit
 ripgrep
 parallel
 flameshot
+libpulse
 pipewire
 pipewire-pulse
 wireplumber
@@ -53,3 +56,10 @@ i3lock
 i3status
 dmenu
 dunst
+dex
+network-manager-applet
+playerctl
+xorg-setxkbmap
+xorg-xrandr
+xorg-xset
+xss-lock

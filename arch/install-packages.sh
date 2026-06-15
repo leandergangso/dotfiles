@@ -3,8 +3,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-OFFICIAL_FILE="$ROOT/arch_new/packages/official.txt"
-AUR_FILE="$ROOT/arch_new/packages/aur.txt"
+OFFICIAL_FILE="$ROOT/arch/packages/official.txt"
+AUR_FILE="$ROOT/arch/packages/aur.txt"
 
 clean_list() {
   awk '!/^[[:space:]]*(#|$)/' "$1" | sort -u
@@ -25,7 +25,7 @@ fi
 
 if [[ -s "$AUR_FILE" ]]; then
   if ! command -v yay >/dev/null 2>&1; then
-    "$ROOT/arch_new/setup-yay.sh"
+    "$ROOT/arch/setup-yay.sh"
   fi
 
   mapfile -t aur_packages < <(clean_list "$AUR_FILE")
