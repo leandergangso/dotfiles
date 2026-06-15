@@ -4,8 +4,6 @@ vim.g.maplocalleader = " "
 -- launch program
 vim.keymap.set("n", "-", "<cmd>Oil<CR>", { desc = "[-] File Explorer" })
 vim.keymap.set("n", "<leader>db", "<cmd>Alpha<CR>", { desc = "[D]ash[B]oard" })
-vim.keymap.set("n", "<leader>L", "<cmd>Lazy<CR>", { desc = "[L]azy" })
-vim.keymap.set("n", "<leader>M", "<cmd>Mason<CR>", { desc = "[M]ason" })
 
 -- terminal
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "[E]scape terminal insert mode" })
@@ -56,8 +54,16 @@ vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "[Y]ank Line to System Clipbo
 vim.keymap.set("n", "<leader>P", [["+P]], { desc = "[P]aste Before (Clipboard)" })
 vim.keymap.set("n", "<leader>p", [["+p]], { desc = "[p]aste After (Clipboard)" })
 
+-- formatting
+vim.keymap.set("n", "<leader>f", function()
+	require("conform").format({
+		async = true,
+		lsp_format = "fallback",
+	})
+end, { desc = "[F]ormat buffer" })
+
 -- misc
-vim.keymap.set("n", "<leander>nh", "<cmd>nohl<CR>", { desc = "[N]o [H]ighlight" })
+vim.keymap.set("n", "<leader>nh", "<cmd>nohl<CR>", { desc = "[N]o [H]ighlight" })
 vim.keymap.set(
 	"n",
 	"<leader>s",

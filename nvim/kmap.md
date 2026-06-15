@@ -54,7 +54,7 @@ LSP and Diagnostics
     gr: Go to references (with LSP).
     <leader>ca: Code action (with LSP).
     <leader>rn: Rename symbol (with LSP).
-    <leader>v: Show diagnostics (using nvim-lspconfig).
+    <leader>v: Show diagnostics (using LSP).
     [d / ]d: Previous/next diagnostic.
 
 Which Key
