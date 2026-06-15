@@ -1,7 +1,7 @@
 vim.pack.add({
-	"https://github.com/nvim-treesitter/nvim-treesitter",
-	"https://github.com/nvim-treesitter/nvim-treesitter-context",
-	"https://github.com/romus204/tree-sitter-manager.nvim",
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-context" },
+	{ src = "https://github.com/romus204/tree-sitter-manager.nvim" },
 })
 
 vim.api.nvim_create_autocmd("FileType", {

@@ -1,5 +1,5 @@
 vim.pack.add({
-	"https://github.com/chomosuke/typst-preview.nvim",
+	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 }, {
 	load = function(plugin)
 		vim.api.nvim_create_autocmd("FileType", {

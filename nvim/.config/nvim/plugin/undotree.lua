@@ -1,5 +1,5 @@
 vim.pack.add({
-	"https://github.com/mbbill/undotree",
+	{ src = "https://github.com/mbbill/undotree" },
 }, {
 	load = function(plugin)
 		vim.keymap.set("n", "<leader>u", function()
