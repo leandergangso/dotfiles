@@ -26,7 +26,7 @@
         ncdu
         yazi
         procs
-        dogdns
+        doggo
         zoxide
         ripgrep
         fastfetch
