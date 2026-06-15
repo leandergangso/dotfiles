@@ -6,7 +6,6 @@ local function open_report(lines)
 	vim.bo[buf].bufhidden = "wipe"
 	vim.bo[buf].swapfile = false
 	vim.bo[buf].modifiable = true
-	vim.bo[buf].filetype = "checkhealth"
 	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 	vim.bo[buf].modifiable = false
 
