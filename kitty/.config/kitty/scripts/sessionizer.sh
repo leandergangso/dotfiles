@@ -22,10 +22,16 @@ load_projects() {
 
 active_projects() {
     local session name project
+    local -A seen=()
 
     kitten @ ls 2>/dev/null |
         jq -r '.[].tabs[].windows[].session_name // empty' |
         while IFS= read -r session; do
+            if [[ -z "$session" || -n "${seen[$session]:-}" ]]; then
+                continue
+            fi
+            seen[$session]=1
+
             name=${session%-*}
 
             for project in "${PROJECTS[@]}"; do
