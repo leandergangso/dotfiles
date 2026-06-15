@@ -1,0 +1,55 @@
+# gui
+
+thunar
+
+# common
+
+base
+base-devel
+fd
+fq
+yq
+age
+git
+fzf
+bat
+curl
+wget
+zsh
+btop
+cloc
+stow
+tree
+neovim
+nvtop
+glow
+yazi
+xclip
+kitty
+strace
+ripgrep
+parallel
+flameshot
+pipewire
+pipewire-pulse
+wireplumber
+
+# dev tooling
+
+go
+pnpm
+go-task
+goreleaser
+docker
+docker-compose
+podman
+podman-compose
+
+# tiling window manager
+
+i3-wm
+i3blocks
+i3lock
+i3status
+dmenu
+dunst

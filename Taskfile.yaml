@@ -45,23 +45,3 @@ tasks:
     desc: Backup and export package manifests
     cmds:
       - ./arch/export-packages.sh
-
-  nix:install:
-    desc: Install the root CLI profile
-    cmds:
-      - nix profile add .#default
-
-  nix:neovim:
-    desc: Install or upgrade Neovim tools (LSPs and formatters)
-    cmds:
-      - nix profile add ./nvim/.config/nvim#default
-
-  nix:update:
-    desc: Update the root flake inputs
-    cmds:
-      - nix flake update
-
-  nix:check:
-    desc: Evaluate the root flake outputs without building them
-    cmds:
-      - nix flake check --no-build

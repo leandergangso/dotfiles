@@ -1,3 +1,0 @@
-brave-bin
-google-chrome
-localsend-bin

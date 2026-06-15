@@ -1,0 +1,4 @@
+brave-bin
+fastfetch
+oh-my-posh
+localsend-bin
