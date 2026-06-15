@@ -40,6 +40,7 @@
               prettier
               tinymist
               websocat
+              tree-sitter
             ];
             pathsToLink = [ "/bin" ];
             ignoreCollisions = true;

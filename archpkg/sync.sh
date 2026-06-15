@@ -8,15 +8,31 @@ PACMAN_FILE="$ROOT/archpkg/pacman.txt"
 AUR_FILE="$ROOT/archpkg/aur.txt"
 
 clean_list() {
-  grep -vE '^\s*#|^\s*$' "$1" | sort -u
+  awk '!/^[[:space:]]*(#|$)/' "$1" | sort -u
 }
+
+if [[ ! -f /etc/arch-release ]]; then
+  echo "This script only supports Arch Linux." >&2
+  exit 1
+fi
 
 echo "Installing pacman packages..."
 if [[ -f "$PACMAN_FILE" ]]; then
-  clean_list "$PACMAN_FILE" | sudo pacman -S --needed -
+  mapfile -t pacman_packages < <(clean_list "$PACMAN_FILE")
+  if (( ${#pacman_packages[@]} )); then
+    sudo pacman -S --needed -- "${pacman_packages[@]}"
+  fi
 fi
 
 echo "Installing AUR packages..."
-if [[ -f "$AUR_FILE" ]]; then
-  clean_list "$AUR_FILE" | yay -S --needed -
+if [[ -s "$AUR_FILE" ]]; then
+  if ! command -v yay >/dev/null 2>&1; then
+    echo "yay is required but not installed." >&2
+    exit 1
+  fi
+
+  mapfile -t aur_packages < <(clean_list "$AUR_FILE")
+  if (( ${#aur_packages[@]} )); then
+    yay -S --needed -- "${aur_packages[@]}"
+  fi
 fi

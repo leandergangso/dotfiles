@@ -14,3 +14,5 @@ require("oil").setup({
 		show_hidden = false,
 	},
 })
+
+vim.keymap.set("n", "-", "<cmd>Oil<CR>", { desc = "[-] File Explorer" })

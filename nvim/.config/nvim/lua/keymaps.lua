@@ -1,10 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- launch program
-vim.keymap.set("n", "-", "<cmd>Oil<CR>", { desc = "[-] File Explorer" })
-vim.keymap.set("n", "<leader>db", "<cmd>Alpha<CR>", { desc = "[D]ash[B]oard" })
-
 -- terminal
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "[E]scape terminal insert mode" })
 vim.keymap.set("n", "<leader>t", "<cmd>terminal<CR>", { desc = "[T]erminal" })

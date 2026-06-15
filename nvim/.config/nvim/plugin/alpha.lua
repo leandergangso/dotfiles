@@ -50,3 +50,5 @@ table.insert(theme.config.layout, {
 })
 
 alpha.setup(theme.config)
+
+vim.keymap.set("n", "<leader>db", "<cmd>Alpha<CR>", { desc = "[D]ash[B]oard" })
