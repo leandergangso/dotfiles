@@ -1,4 +1,3 @@
--- containerfile for dockerfile
 vim.filetype.add({
 	extension = {
 		dockerfile = "dockerfile",

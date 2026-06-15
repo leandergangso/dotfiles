@@ -1,5 +1,19 @@
 local M = {}
 
+function M.state(plugin)
+	if not plugin.active then
+		return "inactive"
+	end
+
+	for _, path in ipairs(vim.opt.runtimepath:get()) do
+		if path == plugin.path then
+			return "loaded"
+		end
+	end
+
+	return "lazy"
+end
+
 local function open_report(lines)
 	local buf = vim.api.nvim_create_buf(false, true)
 	vim.bo[buf].buftype = "nofile"
@@ -18,11 +32,15 @@ end
 function M.list()
 	local plugins = vim.pack.get()
 	local fmt = "%-8s  %-28s  %-10s  %s"
-	local active = 0
+	local counts = { loaded = 0, lazy = 0, inactive = 0 }
 
 	table.sort(plugins, function(a, b)
-		if a.active ~= b.active then
-			return a.active and not b.active
+		local a_state = M.state(a)
+		local b_state = M.state(b)
+
+		if a_state ~= b_state then
+			local order = { loaded = 1, lazy = 2, inactive = 3 }
+			return order[a_state] < order[b_state]
 		end
 
 		return a.spec.name < b.spec.name
@@ -33,23 +51,23 @@ function M.list()
 		"",
 		"Summary",
 		string.format("  loaded: %d", 0),
+		string.format("  lazy: %d", 0),
 		string.format("  inactive: %d", #plugins),
 		string.format("  total: %d", #plugins),
 		"",
 		"Plugins",
-		fmt:format("Active", "Name", "Rev", "Path"),
+		fmt:format("State", "Name", "Rev", "Path"),
 	}
 
 	for _, plugin in ipairs(plugins) do
-		if plugin.active then
-			active = active + 1
-		end
-		lines[#lines + 1] =
-			fmt:format(plugin.active and "yes" or "no", plugin.spec.name, plugin.rev:sub(1, 8), plugin.path)
+		local state = M.state(plugin)
+		counts[state] = counts[state] + 1
+		lines[#lines + 1] = fmt:format(state, plugin.spec.name, plugin.rev:sub(1, 8), plugin.path)
 	end
 
-	lines[4] = string.format("  loaded: %d", active)
-	lines[5] = string.format("  inactive: %d", #plugins - active)
+	lines[4] = string.format("  loaded: %d", counts.loaded)
+	lines[5] = string.format("  lazy: %d", counts.lazy)
+	lines[6] = string.format("  inactive: %d", counts.inactive)
 
 	open_report(lines)
 end
