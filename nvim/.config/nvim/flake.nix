@@ -1,5 +1,5 @@
 {
-  description = "Toolchain for Neovim";
+  description = "Neovim toolchain";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -8,59 +8,33 @@
   outputs =
     { self, nixpkgs }:
     let
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+      cliTools = with pkgs; [
+        bash-language-server
+        shellcheck
+        tree-sitter
+        websocat
       ];
 
-      forAllSystems =
-        f:
-        builtins.listToAttrs (
-          map (system: {
-            name = system;
-            value = f system;
-          }) systems
-        );
+      languageServers = with pkgs; [
+        gopls
+        lua-language-server
+        nil
+        prettier
+        stylua
+        svelte-language-server
+        tailwindcss-language-server
+        typescript-language-server
+        vscode-langservers-extracted
+      ];
     in
     {
-      packages = forAllSystems (
-        system:
-        let
-          pkgs = import nixpkgs { inherit system; };
-          editorTools = pkgs.buildEnv {
-            name = "nvim-editor-tools";
-            paths = with pkgs; [
-              gopls
-              lua-language-server
-              vscode-langservers-extracted
-              svelte-language-server
-              tailwindcss-language-server
-              typescript-language-server
-              stylua
-              prettier
-              tinymist
-              websocat
-              tree-sitter
-            ];
-            pathsToLink = [ "/bin" ];
-            ignoreCollisions = true;
-          };
-        in
-        {
-          inherit editorTools;
-          editor-tools = editorTools;
-          default = editorTools;
-          gopls = pkgs.gopls;
-          lua-language-server = pkgs.lua-language-server;
-          vscode-langservers-extracted = pkgs.vscode-langservers-extracted;
-          svelte-language-server = pkgs.svelte-language-server;
-          tailwindcss-language-server = pkgs.tailwindcss-language-server;
-          typescript-language-server = pkgs.typescript-language-server;
-          stylua = pkgs.stylua;
-          prettier = pkgs.prettier;
-          tinymist = pkgs.tinymist;
-          websocat = pkgs.websocat;
-        }
-      );
+      packages.${system}.default = pkgs.buildEnv {
+        name = "nvim-editor-tools";
+        paths = cliTools ++ languageServers;
+        pathsToLink = [ "/bin" ];
+        ignoreCollisions = true;
+      };
     };
 }

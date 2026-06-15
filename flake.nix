@@ -1,6 +1,5 @@
-# NOTE: avoid system level packages in NIX, let Arch pacman/yay handle those.
 {
-  description = "Global User Packages";
+  description = "Global user packages";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -13,24 +12,24 @@
       pkgs = nixpkgs.legacyPackages.${system};
 
       shellUtils = with pkgs; [
-        jq
-        fd
         age
-        zsh
-        git
         bat
+        btop
+        doggo
+        fd
+        fastfetch
         fzf
+        git
+        jq
+        ncdu
+        oh-my-posh
+        procs
+        ripgrep
         stow
         tree
-        btop
-        ncdu
         yazi
-        procs
-        doggo
         zoxide
-        ripgrep
-        fastfetch
-        oh-my-posh
+        zsh
       ];
 
       windowManager = with pkgs; [
@@ -47,7 +46,6 @@
         go
         go-task
         pnpm
-        neovim
         #docker
         #docker-compose
         #podman
@@ -55,7 +53,6 @@
       ];
 
       programs = with pkgs; [
-        brave
         localsend
       ];
 
@@ -65,8 +62,10 @@
     in
     {
       packages.${system}.default = pkgs.buildEnv {
-        name = "global-packages";
+        name = "global-tools";
         paths = shellUtils ++ windowManager ++ devTools ++ programs ++ fonts;
+        pathsToLink = [ "/bin" ];
+        ignoreCollisions = true;
       };
     };
 }
