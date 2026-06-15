@@ -23,6 +23,7 @@ theme.buttons.val = {
 	dashboard.button("n", "  New file", "<cmd>ene<CR>"),
 	dashboard.button("H", "󰒡  Check health", "<cmd>checkhealth<CR>"),
 	dashboard.button("P", "󰒓  Plugin health", "<cmd>checkhealth vim.pack<CR>"),
+	--dashboard.button("M", "󰏖  Mason modal", "<cmd>Mason<CR>"),
 	dashboard.button("L", "󰈚  List all plugins", "<cmd>lua require('pack').list()<CR>"),
 	dashboard.button("D", "  Prune plugins", "<cmd>lua require('pack').prune()<CR>"),
 	dashboard.button("U", "󰚰  Upgrade plugins", "<cmd>lua vim.pack.update()<CR>"),

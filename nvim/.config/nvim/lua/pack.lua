@@ -44,12 +44,8 @@ function M.list()
 		if plugin.active then
 			active = active + 1
 		end
-		lines[#lines + 1] = fmt:format(
-			plugin.active and "yes" or "no",
-			plugin.spec.name,
-			plugin.rev:sub(1, 8),
-			plugin.path
-		)
+		lines[#lines + 1] =
+			fmt:format(plugin.active and "yes" or "no", plugin.spec.name, plugin.rev:sub(1, 8), plugin.path)
 	end
 
 	lines[4] = string.format("  loaded: %d", active)
@@ -73,11 +69,7 @@ function M.prune()
 		return
 	end
 
-	local choice = vim.fn.confirm(
-		string.format("Delete %d inactive plugins?", #names),
-		"&Delete\n&Cancel",
-		2
-	)
+	local choice = vim.fn.confirm(string.format("Delete %d inactive plugins?", #names), "&Delete\n&Cancel", 2)
 
 	if choice ~= 1 then
 		return

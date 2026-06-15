@@ -1,5 +1,5 @@
 vim.pack.add({
-	"https://github.com/nvim-mini/mini.icons",
+	{ src = "https://github.com/nvim-mini/mini.icons" },
 })
 
 local icons = require("mini.icons")
