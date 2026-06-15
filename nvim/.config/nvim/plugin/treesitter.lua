@@ -9,6 +9,12 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+require("nvim-treesitter.configs").setup({
+	ensure_installed = { "bash", "sh" },
+	auto_install = true,
+	highlight = { enable = true },
+})
+
 require("treesitter-context").setup({
 	enable = true,
 	multiwindow = false,
