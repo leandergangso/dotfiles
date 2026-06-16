@@ -9,7 +9,6 @@ archive_path="$PWD/$archive"
 paths=(
   .config/nvim
   .local/share/nvim
-  .local/state/nvim
 )
 
 selected=()
