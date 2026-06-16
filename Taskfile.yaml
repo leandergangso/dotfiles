@@ -50,3 +50,8 @@ tasks:
     desc: Back up Neovim's local data
     cmds:
       - ./scripts/nvim-backup.sh
+
+  nvim:archive:
+    desc: Archive Neovim config and local data for offline use
+    cmds:
+      - ./scripts/nvim-archive.sh {{.CLI_ARGS}}

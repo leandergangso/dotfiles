@@ -19,10 +19,11 @@ The Neovim config lives in `stow/nvim/.config/nvim/` and is managed by GNU
 Stow, so you do not clone it into `~/.config/nvim` manually.
 
 It uses Neovim's native package manager (`vim.pack`) for plugins, Mason for
-editor tooling, and Treesitter for syntax parsing.
-
-`tree-sitter-cli` is also required because the Treesitter parser manager plugin depends on it.
+editor tooling, and tree-sitter for syntax parsing. Mason-installed tools live
+under `~/.local/share/nvim/mason/`. `tree-sitter-cli` is required because
+`tree-sitter-manager.nvim` depends on it.
 
 Update plugins from the dashboard quick actions or with `:lua vim.pack.update()`.
 
-Run `scripts/nvim-backup.sh` to backup current Neovim setup, for testing this config out.
+Run `task nvim:backup` to backup current Neovim setup, to test this config.
+Run `task nvim:archive` to create a tarball for offline use.
