@@ -11,6 +11,19 @@ sudo pacman -S --needed go-task stow
 Run `task` to inspect the available command list.  
 The underlying `stow` and `arch/*.sh` scripts are still usable directly.
 
+## Hyprland
+
+The Hyprland config lives in `stow/hyprland/.config/hypr/`, with
+`hyprland.lua` as the Lua entry point and supporting modules under `conf/`.
+
+It expects `waybar`, `wofi`, `mako`, `hyprlock`, and `hypridle` alongside
+Hyprland itself, plus XWayland for older X11 apps. The keybindings are
+intentionally close to the old i3 layout, so it should feel familiar if you
+switch over.
+
+The Wayland pieces are themed around Catppuccin Mocha, matching the rest of
+the setup.
+
 ## Terminal
 
 The terminal setup lives in `stow/kitty/.config/kitty/` and

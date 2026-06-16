@@ -68,3 +68,16 @@ xorg-setxkbmap
 xorg-xrandr
 xorg-xset
 xss-lock
+
+# wayland tiling window manager
+
+hyprland
+waybar
+wofi
+hyprlock
+hypridle
+mako
+xdg-desktop-portal-hyprland
+xorg-xwayland
+qt5-wayland
+qt6-wayland

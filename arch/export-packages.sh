@@ -8,11 +8,11 @@ BACKUP_ROOT="$ROOT/arch/backups"
 
 mkdir -p "$PACKAGE_DIR"
 
-if [[ -f "$PACKAGE_DIR/official.txt" || -f "$PACKAGE_DIR/aur.txt" ]]; then
+if [[ -f "$PACKAGE_DIR/pacman.txt" || -f "$PACKAGE_DIR/aur.txt" ]]; then
   backup_dir="$BACKUP_ROOT/$(date +%Y%m%d-%H%M%S)"
   mkdir -p "$backup_dir"
 
-  for manifest in official.txt aur.txt; do
+  for manifest in pacman.txt aur.txt; do
     if [[ -f "$PACKAGE_DIR/$manifest" ]]; then
       cp -- "$PACKAGE_DIR/$manifest" "$backup_dir/$manifest"
     fi
@@ -22,9 +22,9 @@ if [[ -f "$PACKAGE_DIR/official.txt" || -f "$PACKAGE_DIR/aur.txt" ]]; then
   echo "  ${backup_dir#"$ROOT/"}"
 fi
 
-pacman -Qqen | sort -u > "$PACKAGE_DIR/official.txt"
+pacman -Qqen | sort -u > "$PACKAGE_DIR/pacman.txt"
 pacman -Qqem | awk '$0 != "yay"' | sort -u > "$PACKAGE_DIR/aur.txt"
 
 echo "Updated package manifests:"
-echo "  arch/packages/official.txt"
+echo "  arch/packages/pacman.txt"
 echo "  arch/packages/aur.txt"

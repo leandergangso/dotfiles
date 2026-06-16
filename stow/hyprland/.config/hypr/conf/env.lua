@@ -1,0 +1,6 @@
+hl.env("XCURSOR_SIZE", "24")
+hl.env("QT_QPA_PLATFORM", "wayland")
+hl.env("SDL_VIDEODRIVER", "wayland")
+hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
+hl.env("XDG_SESSION_TYPE", "wayland")
+hl.env("NIXOS_OZONE_WL", "1")
