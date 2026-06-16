@@ -152,5 +152,13 @@ command -v task >/dev/null && eval "$(task --completion zsh)"
 command -v zoxide >/dev/null && eval "$(zoxide init --cmd cd zsh)"
 command -v oh-my-posh >/dev/null && eval "$(oh-my-posh init zsh --config "$HOME/.config/ohmyposh/catppuccin-mocha.json")"
 
+# pnpm
+export PNPM_HOME="$HOME/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
+
 # run profiling (remember to init zprof when used)
 #zprof
