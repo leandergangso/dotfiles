@@ -11,6 +11,15 @@ sudo pacman -S --needed go-task stow
 Run `task` to inspect the available command list.  
 The underlying `stow` and `arch/*.sh` scripts are still usable directly.
 
+## Terminal
+
+The terminal setup lives in `stow/kitty/.config/kitty/` and
+`stow/zsh/.zshrc`, and is meant to be used together.
+
+`kitty` is the preferred terminal, `zsh` is the shell config, and
+`oh-my-posh` is an optional prompt enhancement that is enabled only when the
+binary is available.
+
 ##  Neovim
 
 ![vim meme](vim-neo.jpg)
