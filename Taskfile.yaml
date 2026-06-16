@@ -2,27 +2,27 @@ version: "3"
 
 tasks:
   default:
-    desc: List available tasks
+    desc: Show the task list
     cmds:
       - task --list
 
   stow:
-    desc: Link selected packages (task stow -- zsh nvim)
+    desc: Link selected packages from stow/
     cmds:
       - stow {{.CLI_ARGS}}
 
   stow:restow:
-    desc: Relink selected packages and remove stale links
+    desc: Recreate selected links after package changes
     cmds:
       - stow --restow {{.CLI_ARGS}}
 
   stow:delete:
-    desc: Unlink selected packages
+    desc: Remove selected package links
     cmds:
       - stow --delete {{.CLI_ARGS}}
 
   stow:adopt:
-    desc: Adopt conflicting files, then review git diff
+    desc: Move conflicting files into a package
     cmds:
       - stow --adopt {{.CLI_ARGS}}
 
@@ -32,16 +32,21 @@ tasks:
       - find stow -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | xargs -r stow
 
   arch:yay:
-    desc: Install yay when it is missing
+    desc: Bootstrap yay when it is missing
     cmds:
       - ./arch/setup-yay.sh
 
   arch:install:
-    desc: Install official and AUR package manifests
+    desc: Install packages listed in arch/packages/
     cmds:
       - ./arch/install-packages.sh
 
   arch:export:
-    desc: Backup and export package manifests
+    desc: Snapshot the current package manifests
     cmds:
       - ./arch/export-packages.sh
+
+  nvim:backup:
+    desc: Back up Neovim's local data
+    cmds:
+      - ./scripts/nvim-backup.sh

@@ -3,8 +3,8 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PACKAGE_DIR="$ROOT/arch_new/packages"
-BACKUP_ROOT="$ROOT/arch_new/backups"
+PACKAGE_DIR="$ROOT/arch/packages"
+BACKUP_ROOT="$ROOT/arch/backups"
 
 mkdir -p "$PACKAGE_DIR"
 
@@ -26,5 +26,5 @@ pacman -Qqen | sort -u > "$PACKAGE_DIR/official.txt"
 pacman -Qqem | awk '$0 != "yay"' | sort -u > "$PACKAGE_DIR/aur.txt"
 
 echo "Updated package manifests:"
-echo "  arch_new/packages/official.txt"
-echo "  arch_new/packages/aur.txt"
+echo "  arch/packages/official.txt"
+echo "  arch/packages/aur.txt"

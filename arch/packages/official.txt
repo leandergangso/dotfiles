@@ -49,6 +49,7 @@ docker
 docker-compose
 podman
 podman-compose
+tree-sitter-cli
 
 # tiling window manager
 
