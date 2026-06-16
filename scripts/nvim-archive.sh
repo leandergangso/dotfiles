@@ -26,8 +26,13 @@ fi
 
 echo "Archiving:"
 for path in "${selected[@]}"; do
-  echo "  $HOME/$path"
+  source_path="$HOME/$path"
+  if [ -L "$source_path" ]; then
+    echo "  $source_path -> $(readlink -f "$source_path")"
+  else
+    echo "  $source_path"
+  fi
 done
 
-tar -C "$HOME" -czf "$archive_path" "${selected[@]}"
+tar -h -C "$HOME" -czf "$archive_path" "${selected[@]}"
 echo "Created archive at $archive_path"
