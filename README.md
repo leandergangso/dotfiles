@@ -3,8 +3,8 @@
 Arch Linux dotfiles managed with GNU Stow.
 
 ```bash
-git clone https://github.com/leandergangso/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
+git clone https://github.com/leandergangso/dotfiles.git ~/dotfiles
+cd ~/dotfiles
 sudo pacman -S --needed go-task stow
 ```
 
