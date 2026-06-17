@@ -2,9 +2,9 @@ local theme = require("conf.theme")
 
 hl.config({
 	general = {
-		gaps_in = 0,
-		gaps_out = 0,
-		border_size = 3,
+		gaps_in = 2,
+		gaps_out = 4,
+		border_size = 2,
 		col = {
 			active_border = { colors = { theme.mauve, theme.blue }, angle = 45 },
 			inactive_border = theme.surface0,
@@ -12,13 +12,23 @@ hl.config({
 		layout = "dwindle",
 	},
 	decoration = {
-		rounding = 0,
+		rounding = 3,
 		shadow = {
 			enabled = false,
 		},
 	},
 	animations = {
-		enabled = false,
+		enabled = true,
+		bezier = {
+			"snappy, 0.2, 0.8, 0.2, 1.0",
+		},
+		animation = {
+			"windows, 1, 2, snappy, slide",
+			"windowsOut, 1, 2, snappy, slide",
+			"border, 1, 2, snappy",
+			"fade, 1, 2, snappy",
+			"workspaces, 1, 2, snappy, slide",
+		},
 	},
 	misc = {
 		disable_hyprland_logo = true,
