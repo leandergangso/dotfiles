@@ -17,7 +17,7 @@ require("oil").setup({
 		border = "rounded",
 	},
 	view_options = {
-		show_hidden = true,
+		show_hidden = false,
 		is_hidden_file = function(name)
 			return hidden_files[name] == true
 		end,
