@@ -14,7 +14,19 @@ telescope.setup({
 		find_files = {
 			hidden = true,
 			no_ignore = false,
-			file_ignore_patterns = { "%.git/" },
+			find_command = {
+				"fd",
+				"--type",
+				"file",
+				"--hidden",
+				"--exclude",
+				".git",
+			},
+		},
+		live_grep = {
+			additional_args = function()
+				return { "--hidden", "--glob", "!.git/" }
+			end,
 		},
 	},
 	extensions = {
