@@ -11,6 +11,11 @@ telescope.setup({
 		diagnostics = { initial_mode = "normal" },
 		buffers = { initial_mode = "normal" },
 		marks = { initial_mode = "normal" },
+		find_files = {
+			hidden = true,
+			no_ignore = false,
+			file_ignore_patterns = { "%.git/" },
+		},
 	},
 	extensions = {
 		["ui-select"] = require("telescope.themes").get_dropdown({}),
