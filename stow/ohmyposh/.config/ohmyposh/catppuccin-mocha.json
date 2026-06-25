@@ -30,7 +30,7 @@
           "type": "python",
           "style": "plain",
           "foreground": "p:lavender",
-          "template": "{{ if .Venv }}(  {{ .Venv }}) {{ end }}"
+          "template": "{{ if .Venv }}(\ue235 {{ .Venv }}) {{ end }}"
         },
         {
           "type": "session",
