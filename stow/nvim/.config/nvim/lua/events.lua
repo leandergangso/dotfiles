@@ -1,12 +1,12 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
-local MyGroup = augroup("MyGroup", {})
-local YankGroup = augroup("YankGroup", {})
+local my_group = augroup("MyGroup", {})
+local yank_group = augroup("YankGroup", {})
 
 -- highlight yanked text for a brief moment
 autocmd("TextYankPost", {
-	group = YankGroup,
+	group = yank_group,
 	pattern = "*",
 	callback = function()
 		vim.highlight.on_yank({
@@ -17,7 +17,7 @@ autocmd("TextYankPost", {
 })
 
 autocmd("FileType", {
-	group = MyGroup,
+	group = my_group,
 	pattern = "go",
 	callback = function(args)
 		local opts = { buffer = args.buf }
@@ -42,7 +42,7 @@ autocmd("FileType", {
 
 -- setup LSP keymaps
 autocmd("LspAttach", {
-	group = MyGroup,
+	group = my_group,
 	callback = function(e)
 		vim.keymap.set("n", "K", function()
 			vim.lsp.buf.hover({ border = "rounded" })

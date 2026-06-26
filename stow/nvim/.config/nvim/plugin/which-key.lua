@@ -1,11 +1,19 @@
 vim.pack.add({
 	{ src = "https://github.com/folke/which-key.nvim" },
-})
-
-require("which-key").setup({
-	delay = 3000,
-	icons = {
-		mappings = true,
-		keys = {},
-	},
+}, {
+	load = function(plugin)
+		vim.api.nvim_create_autocmd("BufEnter", {
+			once = true,
+			callback = function()
+				vim.cmd.packadd(plugin.spec.name)
+				require("which-key").setup({
+					delay = 2000,
+					icons = {
+						mappings = true,
+						keys = {},
+					},
+				})
+			end,
+		})
+	end,
 })
