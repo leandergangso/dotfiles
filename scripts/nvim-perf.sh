@@ -15,8 +15,13 @@ printf "%-12s %s\n" "TIME" "FILE"
 printf "%-12s %s\n" "----" "----"
 
 grep "$HOME/.config/nvim" "$tmp" |
+sort -k2,2nr |
 awk '{ 
+  sum += $2
   time = sprintf("%.3f ms", $2)
   printf "%-12s %s\n", time, substr($0, index($0, $5)) 
-}' |
-sort -k1,1nr
+} 
+END {
+  print ""
+  printf "%-12s %s\n", sprintf("%.3f ms", sum), "TOTAL TIME"
+}'
