@@ -3,11 +3,5 @@ vim.pack.add({
 })
 
 local icons = require("mini.icons")
-local folder = { glyph = "󰉋", hl = "MiniIconsAzure" }
 
-icons.setup({
-	directory = vim.iter(icons.list("directory")):fold({}, function(acc, name)
-		acc[name] = folder
-		return acc
-	end),
-})
+icons.setup({})

@@ -5,4 +5,8 @@ vim.pack.add({
 	},
 })
 
-vim.cmd.colorscheme("catppuccin")
+require("catppuccin").setup({
+	compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
+})
+
+vim.cmd.colorscheme("catppuccin-mocha")
