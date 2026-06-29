@@ -2,7 +2,7 @@ vim.pack.add({
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 }, {
 	load = function(plugin)
-		vim.api.nvim_create_autocmd("BufRead", {
+		vim.api.nvim_create_autocmd("BufReadPre", {
 			once = true,
 			callback = function()
 				vim.cmd.packadd(plugin.spec.name)

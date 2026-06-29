@@ -12,6 +12,7 @@ vim.pack.add({
 					formatters_by_ft = {
 						lua = { "stylua" },
 						go = { "gofmt" },
+						odin = { "odinfmt" },
 						python = { "black", "isort" },
 						svelte = { "prettier" },
 						javascript = { "prettier" },

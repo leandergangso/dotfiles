@@ -7,7 +7,7 @@ vim.pack.add({
 			callback = function()
 				vim.cmd.packadd(plugin.spec.name)
 				require("which-key").setup({
-					delay = 2000,
+					delay = 1000,
 					icons = {
 						mappings = true,
 						keys = {},
