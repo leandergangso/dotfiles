@@ -2,7 +2,9 @@ vim.pack.add({
 	{ src = "https://github.com/mason-org/mason.nvim" },
 }, {
 	load = function(plugin)
-		vim.schedule(function()
+		local opts = { desc = "[M]ason", silent = true }
+
+		vim.keymap.set("n", "<leader>M", function()
 			vim.cmd.packadd(plugin.spec.name)
 
 			require("mason").setup({
@@ -16,7 +18,10 @@ vim.pack.add({
 				},
 			})
 
-			vim.keymap.set("n", "<leader>M", "<cmd>Mason<CR>", { desc = "[M]ason", silent = true })
-		end)
+			vim.cmd("Mason")
+
+			-- rebind so future hits just the command
+			vim.keymap.set("n", "<leader>M", "<cmd>Mason<CR>", opts)
+		end, opts)
 	end,
 })
