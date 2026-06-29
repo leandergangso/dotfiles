@@ -1,19 +1,5 @@
 local M = {}
 
-function M.state(plugin)
-	if not plugin.active then
-		return "inactive"
-	end
-
-	for _, path in ipairs(vim.opt.runtimepath:get()) do
-		if path == plugin.path then
-			return "loaded"
-		end
-	end
-
-	return "lazy"
-end
-
 local function open_report(lines)
 	local buf = vim.api.nvim_create_buf(false, true)
 	vim.bo[buf].buftype = "nofile"
@@ -27,6 +13,20 @@ local function open_report(lines)
 	vim.api.nvim_win_set_buf(0, buf)
 
 	vim.keymap.set("n", "q", "<cmd>bd!<CR>", { buffer = buf, silent = true, nowait = true })
+end
+
+function M.state(plugin)
+	if not plugin.active then
+		return "inactive"
+	end
+
+	for _, path in ipairs(vim.opt.runtimepath:get()) do
+		if path == plugin.path then
+			return "loaded"
+		end
+	end
+
+	return "lazy"
 end
 
 function M.list()

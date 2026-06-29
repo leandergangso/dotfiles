@@ -3,8 +3,8 @@ vim.pack.add({
 }, {
 	load = function(plugin)
 		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "typst",
 			once = true,
+			pattern = "typst",
 			callback = function()
 				vim.cmd.packadd(plugin.spec.name)
 				require("typst-preview").setup({

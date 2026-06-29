@@ -50,14 +50,6 @@ vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "[Y]ank Line to System Clipbo
 vim.keymap.set("n", "<leader>P", [["+P]], { desc = "[P]aste Before (Clipboard)" })
 vim.keymap.set("n", "<leader>p", [["+p]], { desc = "[p]aste After (Clipboard)" })
 
--- formatting
-vim.keymap.set("n", "<leader>f", function()
-	require("conform").format({
-		async = true,
-		lsp_format = "fallback",
-	})
-end, { desc = "[F]ormat buffer" })
-
 -- misc
 vim.keymap.set("n", "<leader>nh", "<cmd>nohl<CR>", { desc = "[N]o [H]ighlight" })
 vim.keymap.set(
