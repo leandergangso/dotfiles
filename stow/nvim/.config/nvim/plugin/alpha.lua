@@ -20,7 +20,7 @@ theme.header.val = {
 theme.buttons.val = {
 	{ type = "text", val = "Quick actions", opts = { hl = "SpecialComment", position = "center" } },
 	{ type = "padding", val = 1 },
-	--dashboard.button("n", "  New file", "<cmd>ene<CR>"),
+	dashboard.button("C", "  Config", ":e ~/.config/nvim<CR>"),
 	dashboard.button("H", "󰒡  Check health", "<cmd>checkhealth<CR>"),
 	dashboard.button("P", "󰒓  Plugin health", "<cmd>checkhealth vim.pack<CR>"),
 	dashboard.button("L", "󰈚  List all plugins", "<cmd>lua require('pack').list()<CR>"),
