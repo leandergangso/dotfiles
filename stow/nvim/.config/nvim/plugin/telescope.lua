@@ -29,6 +29,8 @@ vim.pack.add({
 								"--hidden",
 								"--exclude",
 								".git",
+								"--exclude",
+								"node_modules",
 							},
 						},
 						live_grep = {
