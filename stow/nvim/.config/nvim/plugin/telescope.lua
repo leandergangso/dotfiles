@@ -1,9 +1,5 @@
 vim.pack.add({
-	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/nvim-telescope/telescope-ui-select.nvim" },
-})
-
-vim.pack.add({
 	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
 }, {
 	load = function(plugin)
@@ -11,6 +7,10 @@ vim.pack.add({
 			once = true,
 			callback = function()
 				vim.cmd.packadd(plugin.spec.name)
+
+				if plugin.spec.name ~= "telescope.nvim" then
+					return
+				end
 
 				local telescope = require("telescope")
 
@@ -45,7 +45,7 @@ vim.pack.add({
 				telescope.load_extension("ui-select")
 
 				local builtin = require("telescope.builtin")
-				vim.keymap.set("n", "<C-p>", builtin.git_files, { desc = "Search Git [P]roject" })
+				--vim.keymap.set("n", "<C-p>", builtin.git_files, { desc = "Search Git [P]roject" })
 				vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
 				vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch [G]rep" })
 				vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch [W]ord" })
@@ -56,7 +56,7 @@ vim.pack.add({
 				vim.keymap.set("n", "<leader>/", function()
 					builtin.current_buffer_fuzzy_find({
 						previewer = false,
-						layout_config = { width = 0.5, height = 0.4 },
+						layout_config = { width = 0.5, height = 0.5 },
 					})
 				end, { desc = "[/] Fuzzy Find" })
 			end,
