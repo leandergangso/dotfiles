@@ -1,12 +1,16 @@
-local lsp_files = vim.api.nvim_get_runtime_file("lsp/*.lua", true)
-local names = {}
+local files = vim.api.nvim_get_runtime_file("lua/lsp/*.lua", true)
 
-for _, filepath in ipairs(lsp_files) do
-	-- Extract the file name without the path and without `.lua` (e.g., "lsp/gopls.lua" -> "gopls")
-	local name = vim.fs.basename(filepath):gsub("%.lua$", "")
-	table.insert(names, name)
-end
+for i = 1, #files do
+	local file = files[i]
 
-if #names > 0 then
-	vim.lsp.enable(names)
+	local name = file:match("lua/lsp/(.+)%.lua$")
+	if name then
+		local ok, cfg = pcall(require, "lsp." .. name)
+		if ok and type(cfg) == "table" then
+			vim.lsp.config(name, cfg)
+			vim.lsp.enable(name)
+		else
+			vim.vim.notify(("invalid LSP config: %s"):format(name), vim.log.levels.WARN)
+		end
+	end
 end

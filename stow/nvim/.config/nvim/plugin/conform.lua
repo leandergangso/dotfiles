@@ -18,6 +18,7 @@ vim.pack.add({
 						javascript = { "prettier" },
 						typescript = { "prettier" },
 						json = { "prettier" },
+						yaml = { "prettier" },
 						html = { "prettier" },
 						markdown = { "prettier" },
 						css = { "prettier" },
