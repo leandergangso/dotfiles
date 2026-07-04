@@ -4,6 +4,13 @@ vim.pack.add({
 
 local icons = require("mini.icons")
 
-icons.setup({})
+icons.setup({
+	extension = {
+		sh = { glyph = "" },
+	},
+	filetype = {
+		dotenv = { glyph = "󰈙", hl = "MiniIconsYellow" },
+	},
+})
 
 icons.mock_nvim_web_devicons()

@@ -13,7 +13,9 @@ vim.pack.add({
 						lua = { "stylua" },
 						go = { "gofmt" },
 						odin = { "odinfmt" },
+						nix = { "nixfmt" },
 						python = { "black", "isort" },
+						astro = { "prettier" },
 						svelte = { "prettier" },
 						javascript = { "prettier" },
 						typescript = { "prettier" },
@@ -23,7 +25,6 @@ vim.pack.add({
 						markdown = { "prettier" },
 						css = { "prettier" },
 						scss = { "prettier" },
-						nix = { "nixfmt" },
 					},
 				})
 
