@@ -8,3 +8,14 @@ vim.filetype.add({
 		["Containerfile"] = "dockerfile",
 	},
 })
+
+vim.filetype.add({
+	pattern = {
+		[".*%.service"] = "systemd",
+		[".*%.timer"] = "systemd",
+		[".*%.target"] = "systemd",
+		[".*%.mount"] = "systemd",
+		[".*%.socket"] = "systemd",
+		[".*%.path"] = "systemd",
+	},
+})
