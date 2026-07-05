@@ -6,11 +6,11 @@ for i = 1, #files do
 	local name = file:match("lua/lsp/(.+)%.lua$")
 	if name then
 		local ok, cfg = pcall(require, "lsp." .. name)
-		if ok and type(cfg) == "table" then
+		if ok and type(cfg) == "table" and not cfg.disabled then
 			vim.lsp.config(name, cfg)
 			vim.lsp.enable(name)
-		else
-			vim.vim.notify(("invalid LSP config: %s"):format(name), vim.log.levels.WARN)
+		elseif not ok then
+			vim.notify(("invalid LSP config: %s"):format(name), vim.log.levels.WARN)
 		end
 	end
 end
