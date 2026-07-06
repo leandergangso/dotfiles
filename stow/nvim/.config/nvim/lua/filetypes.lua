@@ -27,3 +27,9 @@ vim.filetype.add({
 		[".*%.env.*"] = "env",
 	},
 })
+
+vim.filetype.add({
+  extension = {
+    mjml = "html",
+  },
+})

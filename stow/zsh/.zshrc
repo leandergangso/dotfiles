@@ -47,7 +47,7 @@ export TERM="xterm-256color"
 export PATH="$HOME/.nix-profile/bin:$PATH"
 export PATH="$PATH:$HOME/go/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
-export PATH="$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin"
+#export PATH="$PATH:$HOME/.local/share/gem/ruby/3.4.0/bin"
 
 # zstyles
 zstyle ":completion:*" matcher-list "m:{a-z}={A-Za-z}"
@@ -143,8 +143,6 @@ alias gac="git add . && git commit"
 alias gp="git push"
 alias gl="git pull"
 alias glo="git log --all --oneline --decorate --graph"
-
-alias bruno="flatpak run com.usebruno.Bruno"
 
 # integrations
 command -v fzf >/dev/null && eval "$(fzf --zsh)"
