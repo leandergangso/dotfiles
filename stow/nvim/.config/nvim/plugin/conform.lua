@@ -42,17 +42,17 @@ vim.pack.add({
 				end, { desc = "[F]ormat buffer" })
 
 				-- format all buffers
-				vim.keymap.set("n", "<leader>fa", function()
-					local buffers = vim.api.nvim_list_bufs()
+				--vim.keymap.set("n", "<leader>fa", function()
+				--	local buffers = vim.api.nvim_list_bufs()
 
-					for _, bufnr in ipairs(buffers) do
-						-- Only format loaded, editable files (ignores things like NvimTree or terminal buffers)
-						if vim.api.nvim_buf_is_loaded(bufnr) and vim.bo[bufnr].modifiable then
-							conform.format({ async = true, bufnr = bufnr, lsp_format = "fallback", timeout_ms = 500 })
-						end
-					end
-					print("Formatted all active buffers!")
-				end, { desc = "[F]ormat [A]ll open buffers" })
+				--	for _, bufnr in ipairs(buffers) do
+				--		-- Only format loaded, editable files (ignores things like NvimTree or terminal buffers)
+				--		if vim.api.nvim_buf_is_loaded(bufnr) and vim.bo[bufnr].modifiable then
+				--			conform.format({ async = true, bufnr = bufnr, lsp_format = "fallback", timeout_ms = 500 })
+				--		end
+				--	end
+				--	print("Formatted all active buffers!")
+				--end, { desc = "[F]ormat [A]ll open buffers" })
 			end,
 		})
 	end,
