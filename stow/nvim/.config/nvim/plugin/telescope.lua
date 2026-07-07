@@ -26,18 +26,18 @@ vim.pack.add({
 								"fd",
 								"--type",
 								"file",
-								"--hidden",
-								"--exclude",
-								".git",
-								"--exclude",
-								"node_modules",
+								--"--hidden",
+								--"--exclude",
+								--".git",
+								--"--exclude",
+								--"node_modules",
 							},
 						},
-						live_grep = {
-							additional_args = function()
-								return { "--hidden", "--glob", "!.git/" }
-							end,
-						},
+						--live_grep = {
+						--	additional_args = function()
+						--		return { "--hidden", "--glob", "!.git/" }
+						--	end,
+						--},
 					},
 					extensions = {
 						["ui-select"] = require("telescope.themes").get_dropdown({}),
