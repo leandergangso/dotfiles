@@ -20,7 +20,7 @@ vim.pack.add({
 						buffers = { initial_mode = "normal" },
 						marks = { initial_mode = "normal" },
 						find_files = {
-							hidden = true,
+							hidden = false,
 							no_ignore = false,
 							find_command = {
 								"fd",
