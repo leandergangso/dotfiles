@@ -13,8 +13,16 @@ vim.pack.add({
 				end
 
 				local telescope = require("telescope")
+				local actions = require("telescope.actions")
 
 				telescope.setup({
+					defaults = {
+						mappings = {
+							n = {
+								["dd"] = actions.delete_buffer,
+							},
+						},
+					},
 					pickers = {
 						diagnostics = { initial_mode = "normal" },
 						buffers = { initial_mode = "normal" },
