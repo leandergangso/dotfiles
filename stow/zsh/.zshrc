@@ -161,3 +161,7 @@ esac
 
 # run profiling (remember to init zprof when used)
 #zprof
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/leander/.local/bin:$PATH"

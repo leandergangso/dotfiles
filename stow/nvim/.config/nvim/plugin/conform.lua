@@ -20,6 +20,7 @@ vim.pack.add({
 						javascript = { "prettier", "prettierd" },
 						typescript = { "prettier", "prettierd" },
 						json = { "prettier", "prettierd" },
+						jsonc = { "prettier", "prettierd" },
 						yaml = { "prettier", "prettierd" },
 						html = { "prettier", "prettierd" },
 						markdown = { "prettier", "prettierd" },
