@@ -13,7 +13,36 @@ vim.pack.add({
 				end
 
 				local telescope = require("telescope")
+				local themes = require("telescope.themes")
 				local actions = require("telescope.actions")
+
+				local ignored = {
+					".git",
+					"node_modules",
+					".cache",
+					"dist",
+					"build",
+					"target",
+				}
+				local fd_command = {
+					"fd",
+					"--type",
+					"file",
+					"--hidden",
+				}
+
+				for _, dir in ipairs(ignored) do
+					table.insert(fd_command, "--exclude")
+					table.insert(fd_command, dir)
+				end
+
+				local function rg_args()
+					local args = { "--hidden" }
+					for _, dir in ipairs(ignored) do
+						vim.list_extend(args, { "--glob", "!" .. dir .. "/*" })
+					end
+					return args
+				end
 
 				telescope.setup({
 					defaults = {
@@ -28,27 +57,14 @@ vim.pack.add({
 						buffers = { initial_mode = "normal" },
 						marks = { initial_mode = "normal" },
 						find_files = {
-							hidden = false,
-							no_ignore = false,
-							find_command = {
-								"fd",
-								"--type",
-								"file",
-								--"--hidden",
-								--"--exclude",
-								--".git",
-								--"--exclude",
-								--"node_modules",
-							},
+							find_command = fd_command,
 						},
-						--live_grep = {
-						--	additional_args = function()
-						--		return { "--hidden", "--glob", "!.git/" }
-						--	end,
-						--},
+						live_grep = {
+							additional_args = rg_args(),
+						},
 					},
 					extensions = {
-						["ui-select"] = require("telescope.themes").get_dropdown({}),
+						["ui-select"] = themes.get_dropdown({}),
 					},
 				})
 
