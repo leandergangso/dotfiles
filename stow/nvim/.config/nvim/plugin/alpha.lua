@@ -26,6 +26,7 @@ theme.buttons.val = {
 	dashboard.button("L", "󰈚  List all plugins", "<cmd>lua require('pack').list()<CR>"),
 	dashboard.button("D", "  Prune plugins", "<cmd>lua require('pack').prune()<CR>"),
 	dashboard.button("U", "󰚰  Upgrade plugins", "<cmd>lua vim.pack.update()<CR>"),
+	dashboard.button("S", "󰌾  Sync to lockfile", "<cmd>lua vim.pack.update(nil, { target = 'lockfile' })<CR>"),
 	dashboard.button("R", "󰚰  Refresh Mason registry", "<cmd>MasonUpdate<CR>"),
 	dashboard.button("q", "󰅙  Quit", "<cmd>qa<CR>"),
 }
