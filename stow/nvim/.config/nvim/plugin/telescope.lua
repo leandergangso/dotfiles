@@ -56,6 +56,7 @@ vim.pack.add({
 						diagnostics = { initial_mode = "normal" },
 						buffers = { initial_mode = "normal" },
 						marks = { initial_mode = "normal" },
+                        lsp_document_symbols = { initial_mode = "normal" },
 						find_files = {
 							find_command = fd_command,
 						},
@@ -79,6 +80,7 @@ vim.pack.add({
 				vim.keymap.set("n", "<leader>sb", builtin.buffers, { desc = "[S]earch [B]uffers" })
 				vim.keymap.set("n", "<leader>sm", builtin.marks, { desc = "[S]earch [M]arks" })
 				vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
+				vim.keymap.set("n", "<leader>ss", builtin.lsp_document_symbols, { desc = "[S]earch [S]ymbols" })
 				vim.keymap.set("n", "<leader>/", function()
 					builtin.current_buffer_fuzzy_find({
 						previewer = false,

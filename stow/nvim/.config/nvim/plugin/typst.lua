@@ -11,7 +11,8 @@ vim.pack.add({
 					follow_cursor = true,
 					dependencies_bin = {
 						tinymist = vim.fn.exepath("tinymist"),
-						websocat = vim.fn.exepath("websocat"),
+						--websocat = vim.fn.exepath("websocat"),
+						websocat = "/usr/bin/websocat",
 					},
 				})
 			end,
