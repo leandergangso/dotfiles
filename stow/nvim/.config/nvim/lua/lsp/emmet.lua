@@ -1,6 +1,17 @@
 ---@type vim.lsp.Config
 return {
 	cmd = { "emmet-ls", "--stdio" },
-	filetypes = { "html", "css", "scss", "javascript", "typescript", "javascriptreact", "typescriptreact", "templ" },
+	filetypes = {
+		"css",
+		"scss",
+		"sass",
+		"html",
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"svelte",
+		"templ",
+	},
 	root_markers = { "package.json", ".git" },
 }
