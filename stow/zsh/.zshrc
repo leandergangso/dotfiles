@@ -42,7 +42,8 @@ if command -v nvim >/dev/null; then
 else
     export EDITOR="vim"
 fi
-export WORDCHARS="${WORDCHARS/\/}"
+export DEFAULT_SHELL="$SHELL"
+export WORDCHARS="${WORDCHARS/\//}"
 export TERM="xterm-256color"
 export PATH="$HOME/.nix-profile/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
@@ -104,10 +105,10 @@ bindkey "^p" history-search-backward
 bindkey "^n" history-search-forward
 bindkey "^[[A" history-substring-search-up
 bindkey "^[[B" history-substring-search-down
-bindkey "^[[1;5D" backward-word # key: ctrl+arrow-left
-bindkey "^[[1;5C" forward-word # key: ctrl+arrow-right
+bindkey "^[[1;5D" backward-word  # key: ctrl+arrow-left
+bindkey "^[[1;5C" forward-word   # key: ctrl+arrow-right
 bindkey "^[[H" beginning-of-line # key: end
-bindkey "^[[F" end-of-line # key: home
+bindkey "^[[F" end-of-line       # key: home
 bindkey " " magic-space
 
 # buffer line in editor
@@ -154,14 +155,13 @@ command -v oh-my-posh >/dev/null && eval "$(oh-my-posh init zsh --config "$HOME/
 # pnpm
 export PNPM_HOME="/home/leander/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME/bin:"*) ;;
-  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+*":$PNPM_HOME/bin:"*) ;;
+*) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
 
 # run profiling (remember to init zprof when used)
 #zprof
-
 
 # Added by Antigravity CLI installer
 export PATH="/home/leander/.local/bin:$PATH"
