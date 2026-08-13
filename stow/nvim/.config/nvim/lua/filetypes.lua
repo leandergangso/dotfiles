@@ -26,4 +26,4 @@ vim.filetype.add({ pattern = { [".*%.env.*"] = "env" } })
 
 vim.filetype.add({ extension = { mjml = "html" } })
 
-vim.filetype.add({ extension = { templ = "templ" } })
+--vim.filetype.add({ extension = { templ = "templ" } })
