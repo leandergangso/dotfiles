@@ -16,6 +16,7 @@ autocmd("TextYankPost", {
 	end,
 })
 
+-- golang snippets
 autocmd("FileType", {
 	group = my_group,
 	pattern = "go",

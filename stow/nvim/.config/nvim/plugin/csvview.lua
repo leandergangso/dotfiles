@@ -18,6 +18,16 @@ vim.pack.add({
 						jump_prev_row = { "<S-Enter>", mode = { "n", "v" } },
 					},
 				})
+
+				require("csvview").enable()
+
+				vim.api.nvim_create_autocmd("FileType", {
+					pattern = "csv",
+					callback = function()
+						require("csvview").enable()
+						vim.notify("CsvView was enabled")
+					end,
+				})
 			end,
 		})
 	end,
