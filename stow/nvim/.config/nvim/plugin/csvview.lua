@@ -9,6 +9,9 @@ vim.pack.add({
 				vim.cmd.packadd(plugin.spec.name)
 				require("csvview").setup({
 					parser = { comments = { "#", "//" } },
+					view = {
+						display_mode = "highlight", -- or "border"
+					},
 					keymaps = {
 						textobject_field_inner = { "if", mode = { "o", "x" } },
 						textobject_field_outer = { "af", mode = { "o", "x" } },
