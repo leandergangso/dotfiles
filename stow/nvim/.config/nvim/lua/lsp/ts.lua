@@ -1,6 +1,6 @@
 ---@type vim.lsp.Config
 return {
-	cmd = { "typescript-language-server", "--stdio" },
+	cmd = { "tsc", "--lsp", "--stdio" },
 	filetypes = {
 		"javascript",
 		"javascriptreact",
@@ -12,5 +12,10 @@ return {
 		"jsconfig.json",
 		"package.json",
 		".git",
+	},
+	settings = {
+		typescript = {
+			updateImportsOnFileMove = { enabled = "always" },
+		},
 	},
 }
