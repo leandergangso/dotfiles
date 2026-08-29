@@ -1,6 +1,6 @@
 ---@type vim.lsp.Config
 return {
-	disabled = true,
+	disabled = false,
 	cmd = { "nil" },
 	filetypes = { "nix" },
 	root_markers = {
