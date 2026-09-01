@@ -1,30 +1,50 @@
 local mod = "SUPER"
 local terminal = "kitty"
 local file_manager = "thunar"
-local launcher = "wofi --show drun"
+local launcher = "hyprlauncher"
 local lock = "hyprlock"
 
-hl.bind(mod .. " + Return", hl.dsp.exec_cmd(terminal))
-hl.bind(mod .. " + SHIFT + N", hl.dsp.exec_cmd(file_manager))
-hl.bind(mod .. " + C", hl.dsp.window.close())
-hl.bind(mod .. " + CTRL + SHIFT + H", hl.dsp.exec_cmd("systemctl suspend"))
-hl.bind(mod .. " + CTRL + L", hl.dsp.exec_cmd(lock))
-hl.bind(mod .. " + D", hl.dsp.exec_cmd(launcher))
-hl.bind(mod .. " + SHIFT + S", hl.dsp.exec_cmd("flameshot gui"))
+--hl.bind(mod .. " + Space", hl.dsp.exec_cmd("hyprctl switchxkblayout all next"))
 
-hl.bind(mod .. " + J", hl.dsp.focus({ direction = "left" }))
-hl.bind(mod .. " + K", hl.dsp.focus({ direction = "down" }))
-hl.bind(mod .. " + L", hl.dsp.focus({ direction = "up" }))
+hl.bind(mod .. " + Return", hl.dsp.exec_cmd(terminal))
+hl.bind(mod .. " + e", hl.dsp.exec_cmd(file_manager))
+hl.bind(mod .. " + c", hl.dsp.window.close())
+hl.bind(mod .. " + d", hl.dsp.exec_cmd(launcher))
+hl.bind(mod .. " + CTRL + SHIFT + h", hl.dsp.exec_cmd("systemctl suspend"))
+hl.bind(mod .. " + CTRL + l", hl.dsp.exec_cmd(lock))
+hl.bind(
+	mod .. " + m",
+	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
+)
+hl.bind(
+	mod .. "+ SHIFT + s",
+	hl.dsp.exec_cmd(
+		'grim -g "$(slurp)" - | satty -f - --copy-command wl-copy -o "~/Pictures/Screenshots/%Y%m%d_%H%M%S.png"'
+	)
+)
+
+hl.bind(mod .. " + v", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mod .. " + p", hl.dsp.window.pseudo())
+--hl.bind(momod .. " + j", hl.dsp.layout("togglesplit")) -- dwindle only
+
+hl.bind(mod .. " + j", hl.dsp.focus({ direction = "left" }))
+hl.bind(mod .. " + k", hl.dsp.focus({ direction = "down" }))
+hl.bind(mod .. " + l", hl.dsp.focus({ direction = "up" }))
 hl.bind(mod .. " + semicolon", hl.dsp.focus({ direction = "right" }))
 
-hl.bind(mod .. " + SHIFT + J", hl.dsp.window.move({ direction = "left" }))
-hl.bind(mod .. " + SHIFT + K", hl.dsp.window.move({ direction = "down" }))
-hl.bind(mod .. " + SHIFT + L", hl.dsp.window.move({ direction = "up" }))
+hl.bind(mod .. " + SHIFT + j", hl.dsp.window.move({ direction = "left" }))
+hl.bind(mod .. " + SHIFT + k", hl.dsp.window.move({ direction = "down" }))
+hl.bind(mod .. " + SHIFT + l", hl.dsp.window.move({ direction = "up" }))
 hl.bind(mod .. " + SHIFT + semicolon", hl.dsp.window.move({ direction = "right" }))
 
-hl.bind(mod .. " + Q", hl.dsp.layout("togglesplit"))
-hl.bind(mod .. " + F", hl.dsp.window.fullscreen())
-hl.bind(mod .. " + SHIFT + SPACE", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mod .. " + q", hl.dsp.layout("togglesplit"))
+hl.bind(mod .. " + f", hl.dsp.window.fullscreen())
+hl.bind(mod .. " + SHIFT + Space", hl.dsp.window.float({ action = "toggle" }))
+
+hl.bind(mod .. " + PERIOD", hl.dsp.focus({ direction = "r" }))
+hl.bind(mod .. " + COMMA", hl.dsp.focus({ direction = "l" }))
+hl.bind(mod .. " + SHIFT + PERIOD", hl.dsp.window.move({ direction = "r" }))
+hl.bind(mod .. " + SHIFT + COMMA", hl.dsp.window.move({ direction = "l" }))
 
 for i = 1, 10 do
 	local key = i % 10
@@ -32,21 +52,28 @@ for i = 1, 10 do
 	hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
+-- Example special workspace (scratchpad)
+--hl.bind(mainMod .. " + s", hl.dsp.workspace.toggle_special("magic"))
+--hl.bind(mainMod .. " + SHIFT + s", hl.dsp.window.move({ workspace = "special:magic" }))
+
+hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+hl.bind(mod .. " + n", hl.dsp.exec_cmd("playerctl next"))
+hl.bind(mod .. " + b", hl.dsp.exec_cmd("playerctl previous"))
+
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 hl.bind(
 	"XF86AudioRaiseVolume",
-	hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ +3%"),
-	{ locked = true, repeating = true }
+	hl.dsp.exec_raw("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+"),
+	{ repeating = true, locked = true }
 )
 hl.bind(
 	"XF86AudioLowerVolume",
-	hl.dsp.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ -3%"),
-	{ locked = true, repeating = true }
+	hl.dsp.exec_raw("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-"),
+	{ repeating = true, locked = true }
 )
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("pactl set-sink-mute @DEFAULT_SINK@ toggle"), { locked = true })
-hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("pactl set-source-mute @DEFAULT_SOURCE@ toggle"), { locked = true })
-
-hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
-hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind("XF86AudioMute", hl.dsp.exec_raw("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true })
+hl.bind("XF86AudioMicMute", hl.dsp.exec_raw("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true })

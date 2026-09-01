@@ -36,6 +36,10 @@ window#waybar {
   padding: 0 10px;
 }
 
+#clock {
+    font-weight: bold;
+}
+
 #tray {
   background: #181825;
 }

@@ -1,5 +1,6 @@
-require("conf.monitors")
 require("conf.env")
-require("conf.autostart")
+require("conf.monitors")
 require("conf.options")
 require("conf.binds")
+require("conf.window")
+require("conf.autostart")

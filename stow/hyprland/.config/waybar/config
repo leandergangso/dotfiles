@@ -1,11 +1,11 @@
 {
   "layer": "top",
-  "position": "bottom",
-  "height": 28,
+  "position": "top",
+  "height": 24,
   "spacing": 6,
   "modules-left": ["hyprland/workspaces"],
   "modules-center": ["clock"],
-  "modules-right": ["tray", "pulseaudio", "network", "cpu", "memory"],
+  "modules-right": ["cpu", "memory", "pulseaudio", "network", "tray"],
 
   "clock": {
     "format": "{:%Y-%m-%d %H:%M}"
