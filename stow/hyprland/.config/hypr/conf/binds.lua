@@ -41,10 +41,10 @@ hl.bind(mod .. " + q", hl.dsp.layout("togglesplit"))
 hl.bind(mod .. " + f", hl.dsp.window.fullscreen())
 hl.bind(mod .. " + SHIFT + Space", hl.dsp.window.float({ action = "toggle" }))
 
-hl.bind(mod .. " + PERIOD", hl.dsp.focus({ direction = "r" }))
-hl.bind(mod .. " + COMMA", hl.dsp.focus({ direction = "l" }))
-hl.bind(mod .. " + SHIFT + PERIOD", hl.dsp.window.move({ direction = "r" }))
-hl.bind(mod .. " + SHIFT + COMMA", hl.dsp.window.move({ direction = "l" }))
+hl.bind(mod .. " + PERIOD", hl.dsp.focus({ monitor = "-1" }))
+hl.bind(mod .. " + COMMA", hl.dsp.focus({ monitor = "+1" }))
+hl.bind(mod .. " + SHIFT + PERIOD", hl.dsp.window.move({ monitor = "-1" }))
+hl.bind(mod .. " + SHIFT + COMMA", hl.dsp.window.move({ monitor = "+1" }))
 
 for i = 1, 10 do
 	local key = i % 10
