@@ -45,11 +45,9 @@ fi
 export DEFAULT_SHELL="$SHELL"
 export WORDCHARS="${WORDCHARS/\//}"
 export TERM="xterm-256color"
-export PATH="$HOME/.nix-profile/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-#export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/.nix-profile/bin:$PATH"
 
 # zstyles
 zstyle ":completion:*" matcher-list "m:{a-z}={A-Za-z}"
