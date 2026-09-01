@@ -32,8 +32,8 @@ hl.config({
 	},
 	input = {
 		kb_layout = "us,no",
-		follow_mouse = 1,
-		sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
+		follow_mouse = 0,
+		sensitivity = 0,
 	},
 	scrolling = {
 		fullscreen_on_one_column = true,
