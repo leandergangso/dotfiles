@@ -153,21 +153,7 @@ command -v zoxide >/dev/null && eval "$(zoxide init --cmd cd zsh)"
 command -v oh-my-posh >/dev/null && eval "$(oh-my-posh init zsh --config "$HOME/.config/ohmyposh/catppuccin-mocha.json")"
 
 # wrappers
-#nix() {
-#    if [[ "$1" == "develop" ]]; then
-#        case " $* " in
-#        *" -c "* | *" --command "*) ;;
-#        *) set -- "$@" -c "${SHELL##*/}" ;;
-#        esac
-#        #/opt/nixdev/nixdev &>/dev/null &
-#        command nix "$@"
-#        local code=$?
-#        /opt/nixdev/nixdev
-#        return $code
-#    else
-#        command nix "$@"
-#    fi
-#}
+# ...
 
 # pnpm
 export PNPM_HOME="/home/leander/.local/share/pnpm"
