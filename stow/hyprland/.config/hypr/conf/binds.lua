@@ -39,7 +39,11 @@ hl.bind(mod .. " + SHIFT + semicolon", hl.dsp.window.move({ direction = "right" 
 
 hl.bind(mod .. " + q", hl.dsp.layout("togglesplit"))
 hl.bind(mod .. " + f", hl.dsp.window.fullscreen())
-hl.bind(mod .. " + SHIFT + Space", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mod .. " + SHIFT + f", hl.dsp.window.float({ action = "toggle" }))
+
+--hl.bind(mod .. " + g", hl.dsp.group.toggle())
+--hl.bind(mod .. " + TAB", hl.dsp.group.next())
+--hl.bind(mod .. " + SHIFT + TAB", hl.dsp.group.prev())
 
 hl.bind(mod .. " + PERIOD", hl.dsp.focus({ monitor = "-1" }))
 hl.bind(mod .. " + COMMA", hl.dsp.focus({ monitor = "+1" }))
@@ -51,6 +55,23 @@ for i = 1, 10 do
 	hl.bind(mod .. " + " .. key, hl.dsp.focus({ workspace = i }))
 	hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
+
+local monitorLeft = "HDMI-A-1"
+local monitorCenter = "DP-2 "
+local monitorRight = "DP-1"
+
+hl.workspace_rule({ workspace = "1", monitor = monitorLeft })
+hl.workspace_rule({ workspace = "2", monitor = monitorLeft })
+hl.workspace_rule({ workspace = "3", monitor = monitorLeft })
+
+hl.workspace_rule({ workspace = "4", monitor = monitorCenter })
+hl.workspace_rule({ workspace = "5", monitor = monitorCenter })
+hl.workspace_rule({ workspace = "6", monitor = monitorCenter })
+hl.workspace_rule({ workspace = "7", monitor = monitorCenter })
+
+hl.workspace_rule({ workspace = "8", monitor = monitorRight })
+hl.workspace_rule({ workspace = "9", monitor = monitorRight })
+hl.workspace_rule({ workspace = "10", monitor = monitorRight })
 
 -- Example special workspace (scratchpad)
 --hl.bind(mainMod .. " + s", hl.dsp.workspace.toggle_special("magic"))
