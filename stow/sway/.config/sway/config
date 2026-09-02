@@ -1,0 +1,224 @@
+# Main mod key (Super key)
+set $mod Mod4
+
+# --------
+# KEYBINDS
+# --------
+
+# Application shortcuts
+bindsym $mod+Return exec kitty
+bindsym $mod+shift+n exec thunar
+
+# Kill focused window
+bindsym $mod+c kill
+
+# Sleep PC
+bindsym $mod+ctrl+shift+h exec systemctl suspend
+
+# Lock desktop w/bg-color (Using swaylock)
+bindsym $mod+ctrl+l exec swaylock -c 000000
+
+# Start program launcher (Using rofi or wofi instead of dmenu for Wayland, fallback to dmenu if needed)
+bindsym $mod+d exec wofi --show drun || dmenu_run -nb black
+
+# Screenshot (Using grim + slurp instead of flameshot for better Wayland native support)
+bindsym $mod+shift+s exec grim -g "$(slurp)" - | wl-copy
+
+# Keyboard lang-layout toggle
+input type:keyboard {
+    xkb_layout "us,no"
+}
+bindsym $mod+space input type:keyboard xkb_switch_layout next
+
+# Media player controls
+bindsym $mod+n exec playerctl next
+bindsym $mod+b exec playerctl previous
+
+# Volume and media controls
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPrev exec playerctl prev
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-
+bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+
+# Change window focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# Window manipulation
+bindsym $mod+q split toggle 
+bindsym $mod+f fullscreen toggle
+
+# Change container layout 
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# Focus the parent container
+bindsym $mod+a focus parent
+bindsym $mod+s focus child
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Restart sway inplace
+bindsym $mod+Shift+r restart
+
+# -----------------
+# WORKSTATION SETUP
+# -----------------
+
+# Define monitor outputs (use `swaymsg -t get_outputs` to confirm exact names)
+set $ml "HDMI-A-1"
+set $mc "DP-2"
+set $mr "DP-1"
+
+# Monitor setup
+output $ml {
+    mode 1920x1080@60Hz
+    pos 0 0
+    transform 270
+}
+output $mc {
+    mode 1920x1080@60Hz
+    pos 1080 370
+}
+output $mr {
+    mode 1920x1080@60Hz
+    pos 3000 370
+}
+
+# Define names for default workspaces
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Set workspace for monitor
+workspace $ws1 output $ml
+workspace $ws2 output $ml
+workspace $ws3 output $ml
+workspace $ws4 output $mc
+workspace $ws5 output $mc
+workspace $ws6 output $mc
+workspace $ws7 output $mc
+workspace $ws8 output $mr
+workspace $ws9 output $mr
+workspace $ws10 output $mr
+
+# Switch workspace
+bindsym $mod+ctrl+j workspace prev
+bindsym $mod+ctrl+semicolon workspace next
+
+# Move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# Move focused output
+bindsym $mod+less focus output left
+bindsym $mod+greater focus output right
+
+# Move window to other workspace
+bindsym $mod+ctrl+shift+j move container to workspace prev; workspace prev
+bindsym $mod+ctrl+shift+semicolon move container to workspace next; workspace next
+
+# Move container to other output
+bindsym $mod+shift+less move container to output left; focus left
+bindsym $mod+shift+greater move container to output right; focus right
+
+# Move workspace to other output
+bindsym $mod+shift+ctrl+less move workspace to output left 
+bindsym $mod+shift+ctrl+greater move workspace to output right 
+
+# Switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6; workspace $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8; workspace $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9; workspace $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10; workspace $ws10
+
+# -----
+# MODES 
+# -----
+
+bindsym $mod+r mode "resize"
+mode "resize" {
+    bindsym j resize shrink width 100 px
+    bindsym k resize shrink height 100 px 
+    bindsym l resize grow height 100 px
+    bindsym semicolon resize grow width 100 px
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+
+# ---------------------
+# GENERAL CONFIGURATION
+# ---------------------
+
+default_orientation auto
+font pango:monospace 8
+
+gaps outer 0
+gaps inner 0
+smart_gaps on
+
+focus_follows_mouse no
+floating_modifier $mod
+
+for_window [class="^.*"] border pixel 3
+
+# -------
+# STYLING
+# -------
+
+client.focused          #6272A4 #6272A4 #F8F8F2 #bec5da    #6272A4
+client.focused_inactive #44475A #44475A #F8F8F2 #44475A    #44475A
+client.unfocused        #282A36 #282A36 #BFBFBF #282A36    #282A36
+client.urgent           #44475A #FF5555 #F8F8F2 #FF5555    #FF5555
+client.placeholder      #282A36 #282A36 #F8F8F2 #282A36    #282A36
+client.background       #F8F8F2
+
+# ----------
+# BACKGROUND
+# ----------
+
+exec mako
+exec waybar
+exec swaybg -c "#282A36"
+exec swayidle -w \
+    timeout 600 'swaylock -c 000000' \
+    timeout 1200 'swaymsg "output * power off"' \
+    resume 'swaymsg "output * power on"' \
+    before-sleep 'swaylock -c 000000'
