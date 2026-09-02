@@ -42,12 +42,12 @@ if command -v nvim >/dev/null; then
 else
     export EDITOR="vim"
 fi
-export DEFAULT_SHELL="$SHELL"
-export WORDCHARS="${WORDCHARS/\//}"
-export TERM="xterm-256color"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
-export PATH="$HOME/.nix-profile/bin:$PATH"
+export WORDCHARS="${WORDCHARS/\//}"
+export TERM="xterm-256color"
+export DEFAULT_SHELL="$SHELL"
+export BAT_PAGING=never
 
 # zstyles
 zstyle ":completion:*" matcher-list "m:{a-z}={A-Za-z}"
@@ -81,9 +81,9 @@ repos=(
 plugin-load "${repos[@]}"
 
 # history
+SAVEHIST=100000
 HISTSIZE=50000
 HISTFILE=~/.zsh_history
-SAVEHIST=100000
 
 # options
 setopt AUTO_CD
@@ -120,9 +120,9 @@ alias ssh="TERM=xterm-256color ssh"
 alias hist="history -in"
 alias cls="clear"
 alias vim="nvim"
-alias cat="bat --paging=never"
 alias grep="grep --color"
 alias tree="tree -C"
+alias task="go-task"
 alias work="cd /work && ll"
 
 alias -g ...="../.."
