@@ -1,13 +1,16 @@
-# Main mod key (Super key)
 set $mod Mod4
+set $term kitty
+set $explorer thunar
+set $launcher fuzzel
+set $lock swaylock
 
 # --------
 # KEYBINDS
 # --------
 
 # Application shortcuts
-bindsym $mod+Return exec kitty
-bindsym $mod+shift+n exec thunar
+bindsym $mod+Return exec $term
+bindsym $mod+shift+n exec $explorer
 
 # Kill focused window
 bindsym $mod+c kill
@@ -15,11 +18,11 @@ bindsym $mod+c kill
 # Sleep PC
 bindsym $mod+ctrl+shift+h exec systemctl suspend
 
-# Lock desktop w/bg-color (Using swaylock)
-bindsym $mod+ctrl+l exec swaylock -c 000000
+# Lock desktop w/bg-color
+bindsym $mod+ctrl+l exec $lock -c 000000
 
-# Start program launcher (Using rofi or wofi instead of dmenu for Wayland, fallback to dmenu if needed)
-bindsym $mod+d exec wofi --show drun || dmenu_run -nb black
+# Start program launcher
+bindsym $mod+d exec $launcher
 
 # Screenshot (Using grim + slurp instead of flameshot for better Wayland native support)
 bindsym $mod+shift+s exec grim -g "$(slurp)" - | wl-copy
