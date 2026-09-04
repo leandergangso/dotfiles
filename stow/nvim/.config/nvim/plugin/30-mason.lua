@@ -1,3 +1,7 @@
+if true then
+	return -- disable plugin
+end
+
 vim.pack.add({
 	{ src = "https://github.com/mason-org/mason.nvim" },
 })
