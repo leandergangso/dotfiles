@@ -221,9 +221,16 @@ client.background       #F8F8F2
 # ============================================
 # autostart
 # ============================================
-exec dbus-update-activation-environment --systemd --all
-exec systemctl --user import-environment DISPLAY SWAYSOCK WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
-exec systemctl --user set-environment XDG_CURRENT_DESKTOP=sway
+exec systemctl --user set-environment \
+    XCURSOR_SIZE=24 \
+    HYPRCURSOR_SIZE=24 \
+    QT_QPA_PLATFORM=wayland \
+    SDL_VIDEODRIVER=wayland \
+    XDG_CURRENT_DESKTOP=sway \
+    XDG_SESSION_TYPE=wayland \
+    NIXOS_OZONE_WL=1 \
+    && systemctl --user import-environment DISPLAY SWAYSOCK WAYLAND_DISPLAY \
+    && dbus-update-activation-environment --systemd --all
 
 exec swaybg -c $base
 exec mako
