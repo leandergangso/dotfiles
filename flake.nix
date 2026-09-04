@@ -19,7 +19,6 @@
         name = "global-tools";
 
         paths = with pkgs; [
-          # nix
           nixd # alt: nil
           nixfmt
 
