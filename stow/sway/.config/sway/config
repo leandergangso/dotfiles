@@ -3,7 +3,7 @@
 # ============================================
 set $mod Mod4
 set $term kitty
-set $browser firefox
+set $browser brave
 set $explorer thunar
 set $launcher fuzzel
 set $lock swaylock -c $base
