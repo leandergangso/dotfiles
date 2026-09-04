@@ -1,14 +1,16 @@
 vim.filetype.add({
-	pattern = {
-		-- Dockerfile
-		["[Dd]ockerfile.*"] = "dockerfile",
+    pattern = {
+        -- Dockerfile variations
+        ["[Dd]ockerfile.*"] = "dockerfile",
 
-		-- Docker Compose & Podman Compose
-		[".*docker%-compose.*%.yaml"] = "yaml",
-		[".*docker%-compose.*%.yml"] = "yaml",
-		[".*podman%-compose.*%.yaml"] = "yaml",
-		[".*podman%-compose.*%.yml"] = "yaml",
-	},
+        -- Docker Compose, Podman Compose, and OCI Standard Compose files
+        [".*docker%-compose.*%.yaml"] = "yaml",
+        [".*docker%-compose.*%.yml"] = "yaml",
+        [".*podman%-compose.*%.yaml"] = "yaml",
+        [".*podman%-compose.*%.yml"] = "yaml",
+        [".*compose.*%.yaml"] = "yaml",
+        [".*compose.*%.yml"] = "yaml",
+    },
 })
 
 vim.filetype.add({
