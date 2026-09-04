@@ -226,8 +226,8 @@ exec systemctl --user set-environment \
     HYPRCURSOR_SIZE=24 \
     QT_QPA_PLATFORM=wayland \
     SDL_VIDEODRIVER=wayland \
-    XDG_CURRENT_DESKTOP=sway \
     XDG_SESSION_TYPE=wayland \
+    XDG_CURRENT_DESKTOP=sway \
     NIXOS_OZONE_WL=1 \
     && systemctl --user import-environment DISPLAY SWAYSOCK WAYLAND_DISPLAY \
     && dbus-update-activation-environment --systemd --all

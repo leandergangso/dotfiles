@@ -1,8 +1,6 @@
 {
   # init:   nix profile add ~/.dotfiles
-  # update: nix flake update ~/.dotfiles
-
-  description = "Personal global tools";
+  # update: nix flake upgrade --all
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -16,27 +14,48 @@
     in
     {
       packages.${system}.default = pkgs.buildEnv {
-        name = "global-tools";
+        name = "tools";
 
         paths = with pkgs; [
-          nixd # alt: nil
+          nil
           nixfmt
 
           # utils
-          brave
-          neovim
           bat
+          brave
+          btop
+          fastfetch
           fd
+          figlet
           fzf
+          git
+          go-task
           jq
-          yq
+          neovim
           ripgrep
+          tree
+          tree-sitter
+          yazi
+          yq
           zoxide
+
+          # lang
+          go
+          pnpm
+          python3
 
           # formatter
           prettier
           stylua
         ];
+      };
+
+      # use: nix flake init -t ~/.dotfiles#default
+      templates = {
+        default = {
+          path = ./templates/default;
+          description = "Standard development environment template";
+        };
       };
     };
 }

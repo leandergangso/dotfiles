@@ -42,6 +42,7 @@ if command -v nvim >/dev/null; then
 else
     export EDITOR="vim"
 fi
+export PATH="$HOME/.nix-profile/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export WORDCHARS="${WORDCHARS/\//}"
@@ -153,13 +154,13 @@ command -v oh-my-posh >/dev/null && eval "$(oh-my-posh init zsh --config "$HOME/
 # wrappers
 # ...
 
-# pnpm
-export PNPM_HOME="/home/leander/.local/share/pnpm"
-case ":$PATH:" in
-*":$PNPM_HOME/bin:"*) ;;
-*) export PATH="$PNPM_HOME/bin:$PATH" ;;
-esac
-# pnpm end
+## pnpm
+#export PNPM_HOME="/home/leander/.local/share/pnpm"
+#case ":$PATH:" in
+#*":$PNPM_HOME/bin:"*) ;;
+#*) export PATH="$PNPM_HOME/bin:$PATH" ;;
+#esac
+## pnpm end
 
 # run profiling (remember to init zprof when used)
 #zprof
