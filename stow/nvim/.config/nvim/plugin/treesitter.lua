@@ -14,7 +14,7 @@ require("tree-sitter-manager").setup({
 require("treesitter-context").setup({
 	enable = true,
 	multiwindow = false,
-	max_lines = 0,
+	max_lines = 6,
 	min_window_height = 0,
 	line_numbers = true,
 	multiline_threshold = 20,
