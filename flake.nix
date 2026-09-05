@@ -24,8 +24,6 @@
           # utils
           bat
           brave
-          btop
-          fastfetch
           fd
           figlet
           fzf

@@ -1,3 +1,0 @@
-brave-bin
-oh-my-posh
-localsend-bin
