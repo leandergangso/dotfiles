@@ -12,10 +12,10 @@ window#waybar {
 }
 
 #workspaces {
-  background: #181825;
+  background: #11111b;
   margin: 5px 4px;
   padding: 2px 4px;
-  border-radius: 3px;
+  border-radius: 6px;
 }
 
 #workspaces button {
@@ -23,19 +23,19 @@ window#waybar {
   margin: 2px;
   color: #a6adc8;
   background: transparent;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 #workspaces button.focused,
 #workspaces button.active {
-  background: #313244;
-  color: #89b4fa;
+  background: #cba6f7;
+  color: #11111b;
   font-weight: bold;
 }
 
 #workspaces button:hover {
   background: #45475a;
-  color: #cdd6f4;
+  color: #f5c2e7;
 }
 
 #clock,
@@ -49,7 +49,7 @@ window#waybar {
 }
 
 #mode {
-  background-color: #fab387;
+  background-color: #f38ba8;
   color: #11111b;
   padding: 0 9px;
   margin: 8px 6px;
@@ -79,7 +79,7 @@ window#waybar {
 }
 
 #language {
-  color: #cdd6f4;
+  color: #b4befe;
   font-weight: bold;
 }
 

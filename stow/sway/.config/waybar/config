@@ -3,7 +3,7 @@
     "position": "top",
     "modules-left": [
         "sway/workspaces",
-        "sway/mode",
+        "sway/mode"
     ],
     "modules-center": [
         "clock"
@@ -59,6 +59,6 @@
         "tooltip-format": "{ifname} via {gwaddr}"
     },
     "sway/language": {
-        "format": "  {}",
+        "format": "  {}"
     }
 }

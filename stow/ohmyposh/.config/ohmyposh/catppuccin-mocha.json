@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
   "palette": {
-    "os": "#ACB0BE",
+    "os": "#BAC2DE",
     "closer": "p:os",
     "pink": "#F5C2E7",
     "lavender": "#B4BEFE",
@@ -58,7 +58,6 @@
         {
           "foreground": "p:lavender",
           "options": {
-            "fetch_status": true,
             "branch_icon": "\ue725 "
           },
           "template": "{{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }}{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}",
