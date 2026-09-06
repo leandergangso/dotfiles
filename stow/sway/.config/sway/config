@@ -129,17 +129,8 @@ bindsym $mod+Shift+period move container to output right; focus right
 #    # bindsym $mod+w layout tabbed
 #    # bindsym $mod+e layout toggle split
 #
-#    # Make the current focus fullscreen
-#    # bindsym $mod+f fullscreen
-#
-#    # Toggle the current focus between tiling and floating mode
-#    # bindsym $mod+Shift+space floating toggle
-#
 #    # Swap focus between the tiling area and the floating area
-#    # bindsym $mod+space focus mode_toggle
-#
-#    # Move focus to the parent container
-#    # bindsym $mod+a focus parent
+#    # bindsym $mod+space focus mode_toggle # NOTE: i want this somehow
 
 # scratchpad
 # move the currently focused window to the scratchpad
@@ -160,6 +151,9 @@ bindsym $mod+Return exec $term
 bindsym $mod+BackSpace exec $browser
 bindsym $mod+Shift+n exec $explorer
 bindsym $mod+d exec $launcher
+
+# TODO: use $mod+w instead?
+# remove unwanted bindings? (simplify)
 
 bindsym $mod+c kill
 bindsym $mod+Ctrl+l exec $lock
