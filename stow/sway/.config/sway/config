@@ -144,6 +144,7 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'Yes, exit' 'swa
 
 input type:keyboard {
     xkb_layout "us,no"
+    #xkb_options caps:swapescape
 }
 bindsym --locked $mod+space input type:keyboard xkb_switch_layout next
 
