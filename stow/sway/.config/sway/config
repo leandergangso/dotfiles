@@ -18,7 +18,7 @@ set $right semicolon
 # ============================================
 # general
 # ============================================
-font pango:FiraCode 8
+font pango:"JetBrainsMono Nerd Font" 8
 gaps outer 0
 gaps inner 0
 smart_gaps off
