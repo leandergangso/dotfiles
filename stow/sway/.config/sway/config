@@ -30,7 +30,20 @@ default_floating_border pixel 1
 default_orientation horizontal
 
 # ============================================
-# workspaces - see `swaymsg -t get_outputs`
+# inputs/devices
+# ============================================
+input type:touchpad {
+    natural_scroll enabled
+}
+
+input type:keyboard {
+    xkb_layout "us,no"
+    #xkb_options caps:swapescape
+}
+bindsym --locked $mod+space input type:keyboard xkb_switch_layout next
+
+# ============================================
+# outputs/workspaces - see `swaymsg -t get_outputs`
 # ============================================
 set $ml "HDMI-A-1"
 set $mc "DP-2"
