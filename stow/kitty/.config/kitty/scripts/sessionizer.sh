@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SESSION_DIR="$HOME/.config/kitty/sessions"
-SEARCH_PATHS=("/work" "$HOME/dotfiles")
+SEARCH_PATHS=("/repos" "$HOME/repos" "$HOME/.dotfiles")
 
 PROJECTS=()
 
