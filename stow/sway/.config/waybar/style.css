@@ -11,8 +11,10 @@ window#waybar {
   color: #cdd6f4;
 }
 
+/* Workspaces */
+
 #workspaces {
-  background: #11111b;
+  background: #181825;
   margin: 5px 4px;
   padding: 2px 4px;
   border-radius: 6px;
@@ -21,22 +23,24 @@ window#waybar {
 #workspaces button {
   padding: 0 8px;
   margin: 2px;
-  color: #a6adc8;
+  color: #6c7086;
   background: transparent;
   border-radius: 4px;
 }
 
 #workspaces button.focused,
 #workspaces button.active {
-  background: #cba6f7;
-  color: #11111b;
+  background: #45475a;
+  color: #cdd6f4;
   font-weight: bold;
 }
 
 #workspaces button:hover {
-  background: #45475a;
-  color: #f5c2e7;
+  background: #313244;
+  color: #cba6f7;
 }
+
+/* Modules */
 
 #clock,
 #pulseaudio,
@@ -48,19 +52,25 @@ window#waybar {
   background: transparent;
 }
 
+/* Sway mode */
+
 #mode {
-  background-color: #f38ba8;
-  color: #11111b;
+  background: #f38ba8;
+  color: #1e1e2e;
   padding: 0 9px;
   margin: 8px 6px;
   border-radius: 6px;
   font-weight: bold;
 }
 
+/* Clock */
+
 #clock {
   font-weight: bold;
   color: #cdd6f4;
 }
+
+/* Status modules */
 
 #pulseaudio {
   color: #89b4fa;
