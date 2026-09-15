@@ -215,7 +215,7 @@ mode "resize" {
 #                       border    background  text      indicator  child_border
 client.focused          #45475a   #45475a     #cdd6f4   #cba6f7    #45475a
 client.focused_inactive #313244   #313244     #bac2de   #585b70    #313244
-client.unfocused        #181825   #181825     #6c7086   #181825    #181825
+client.unfocused        #313244   #181825     #6c7086   #181825    #181825
 client.urgent           #f38ba8   #f38ba8     #1e1e2e   #f38ba8    #f38ba8
 client.placeholder      #181825   #181825     #6c7086   #181825    #181825
 client.background       #1e1e2e
