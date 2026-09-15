@@ -9,9 +9,9 @@
   },
   "version": 3,
   "final_space": true,
-  "console_title_template": "{{ .Shell }} in {{ .Folder }}",
+  "console_title_template": "󰉋 {{ .Folder }}",
   "transient_prompt": {
-    "template": "{{ .Folder }} {{ if .Segments.Executiontime.FormattedMs }}{{ .Segments.Executiontime.FormattedMs }} {{ end }}{{ if .Jobs }}&{{ .Jobs }} {{ end }}{{ if .Code }}?{{ .Code }} {{ end }}\uf105 ",
+    "template": " {{ .Folder }} {{ if .Segments.Executiontime.FormattedMs }}{{ .Segments.Executiontime.FormattedMs }} {{ end }}{{ if .Jobs }}&{{ .Jobs }} {{ end }}{{ if .Code }}?{{ .Code }} {{ end }}\uf105 ",
     "foreground": "p:pink"
   },
   "blocks": [
