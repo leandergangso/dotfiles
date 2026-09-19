@@ -3,7 +3,7 @@
   "palette": {
     "os": "#BAC2DE",
     "closer": "p:os",
-    "pink": "#F5C2E7",
+    "pink": "#EBA0AC",
     "lavender": "#B4BEFE",
     "blue": "#89B4FA"
   },
@@ -11,7 +11,7 @@
   "final_space": true,
   "console_title_template": "󰉋 {{ .Folder }}",
   "transient_prompt": {
-    "template": " {{ .Folder }} {{ if .Segments.Executiontime.FormattedMs }}{{ .Segments.Executiontime.FormattedMs }} {{ end }}{{ if .Jobs }}&{{ .Jobs }} {{ end }}{{ if .Code }}?{{ .Code }} {{ end }}\uf105 ",
+    "template": "{{ .Folder }} {{ if .Segments.Executiontime.FormattedMs }}{{ .Segments.Executiontime.FormattedMs }} {{ end }}{{ if .Jobs }}&{{ .Jobs }} {{ end }}{{ if .Code }}?{{ .Code }} {{ end }}\uf105 ",
     "foreground": "p:pink"
   },
   "blocks": [
