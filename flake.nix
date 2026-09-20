@@ -22,6 +22,7 @@
           nixfmt
 
           # utils
+          age
           bat
           brave
           fd
