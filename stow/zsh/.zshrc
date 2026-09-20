@@ -37,11 +37,14 @@ function plugin-load {
 }
 
 # exports
+typeset EDITOR
 if command -v nvim >/dev/null; then
-    export EDITOR="nvim"
+    EDITOR="$(which nvim)"
 else
-    export EDITOR="vim"
+    EDITOR="vim"
 fi
+export EDITOR
+export SUDO_EDITOR="$EDITOR"
 export PATH="$HOME/.nix-profile/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
