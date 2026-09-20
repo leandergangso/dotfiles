@@ -124,7 +124,7 @@ alias vim="nvim"
 alias grep="grep --color"
 alias tree="tree -C"
 alias task="go-task"
-alias work="cd /work && ll"
+alias work="cd /repos && ll"
 
 alias -g ...="../.."
 alias -g ....="../../.."
