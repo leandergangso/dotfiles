@@ -155,12 +155,6 @@ bindsym $mod+minus scratchpad show
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'Yes, exit' 'swaymsg exit'
 
-input type:keyboard {
-    xkb_layout "us,no"
-    #xkb_options caps:swapescape
-}
-bindsym --locked $mod+space input type:keyboard xkb_switch_layout next
-
 bindsym $mod+Return exec $term
 bindsym $mod+BackSpace exec $browser
 bindsym $mod+Shift+n exec $explorer

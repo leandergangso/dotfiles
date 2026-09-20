@@ -14,7 +14,7 @@ window#waybar {
 /* Workspaces */
 
 #workspaces {
-  background: #181825;
+  background: #11111b;
   margin: 5px 4px;
   padding: 2px 4px;
   border-radius: 6px;
@@ -28,16 +28,21 @@ window#waybar {
   border-radius: 4px;
 }
 
-#workspaces button.focused,
-#workspaces button.active {
-  background: #45475a;
-  color: #cdd6f4;
-  font-weight: bold;
+#workspaces button.visible {
+  background: #313244;
+  color: #bac2de;
 }
 
 #workspaces button:hover {
   background: #313244;
-  color: #cba6f7;
+  color: #cdd6f4;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+  background: #cba6f7;
+  color: #1e1e2e;
+  font-weight: bold;
 }
 
 /* Modules */
