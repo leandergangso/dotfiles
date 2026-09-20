@@ -28,6 +28,7 @@ mouse_warping output
 default_border pixel 2
 default_floating_border pixel 2
 default_orientation horizontal
+#hide_edge_borders --i3 smart # hide tabbed for only 1 child
 
 # ============================================
 # inputs/devices
@@ -128,23 +129,6 @@ bindsym $mod+Shift+period move container to output right; focus right
 # ============================================
 # bindings
 # ============================================
-##
-## Layout stuff:
-##
-#    # You can "split" the current object of your focus with
-#    # $mod+b or $mod+v, for horizontal and vertical splits
-#    # respectively.
-#    # bindsym $mod+b splith
-#    # bindsym $mod+v splitv
-#
-#    # Switch the current container between different layout styles
-#    # bindsym $mod+s layout stacking
-#    # bindsym $mod+w layout tabbed
-#    # bindsym $mod+e layout toggle split
-#
-#    # Swap focus between the tiling area and the floating area
-#    # bindsym $mod+space focus mode_toggle # NOTE: i want this somehow
-
 # scratchpad
 # move the currently focused window to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
@@ -160,23 +144,20 @@ bindsym $mod+BackSpace exec $browser
 bindsym $mod+Shift+n exec $explorer
 bindsym $mod+d exec $launcher
 
-# TODO: use $mod+w instead?
-# remove unwanted bindings? (simplify)
-
 bindsym $mod+c kill
 bindsym $mod+Ctrl+l exec $lock
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy # grab screenshot
 
 # window manipulation
-bindsym $mod+q split toggle 
+#bindsym $mod+q split toggle 
 bindsym $mod+f fullscreen toggle
 
 # change container layout 
-bindsym $mod+t layout tabbed
+bindsym $mod+t layout toggle tabbed split
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+#bindsym $mod+Shift+space floating toggle
 
 # music/sound control
 bindsym $mod+n exec playerctl next
@@ -228,7 +209,7 @@ exec systemctl --user set-environment \
     && systemctl --user import-environment DISPLAY SWAYSOCK WAYLAND_DISPLAY XDG_DATA_DIRS \
     && dbus-update-activation-environment --systemd --all
 
-exec swaybg -c $base
+exec swaybg -c '#000000'
 exec mako
 exec waybar
 
