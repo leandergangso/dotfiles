@@ -42,6 +42,7 @@
           # lang
           go
           pnpm
+          nodejs
           python3
 
           # lsp
