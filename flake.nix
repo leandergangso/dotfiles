@@ -41,6 +41,7 @@
 
           # lang
           go
+          odin
           pnpm
           nodejs
           python3
