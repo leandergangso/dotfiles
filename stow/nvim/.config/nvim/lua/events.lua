@@ -41,6 +41,17 @@ autocmd("FileType", {
 	end,
 })
 
+-- odin snippets
+autocmd("FileType", {
+	group = my_group,
+	pattern = "odin",
+	callback = function(args)
+		local opts = { buffer = args.buf }
+
+		vim.keymap.set("n", "<leader>ee", "oif err != nil {<CR>}<Esc>Oreturn err<Esc>", opts)
+	end,
+})
+
 -- setup LSP keymaps
 autocmd("LspAttach", {
 	group = my_group,

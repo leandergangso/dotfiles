@@ -1,8 +1,4 @@
 {
   "diagnostics.globals": ["vim", "os"],
-    "workspace.library": [
-        "/usr/share/nvim/runtime",
-        "config",
-        "${3rd}/luv/library"
-    ]
+  "workspace.library": ["$VIMRUNTIME", "${3rd}/luv/library"]
 }
