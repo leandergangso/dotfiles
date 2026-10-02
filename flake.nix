@@ -12,12 +12,18 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+
+      #ols-nightly = import ./flakes/ols.nix { inherit pkgs; };
     in
     {
       packages.${system}.default = pkgs.buildEnv {
         name = "tools";
 
         paths = with pkgs; [
+          # custom
+          #ols-nightly
+
+          # nix
           nil
           nixfmt
 
