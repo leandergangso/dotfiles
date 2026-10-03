@@ -47,6 +47,7 @@
 
           # lang
           go
+          zig
           odin
           pnpm
           nodejs
@@ -58,7 +59,7 @@
           dockerfile-language-server
           emmet-ls
           gopls
-          hyprls
+          zls # zig
           lua-language-server
           vscode-langservers-extracted
           ols # odin
