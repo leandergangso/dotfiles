@@ -1,5 +1,3 @@
-# FIX: broken custom ols binary
-
 { pkgs }:
 
 pkgs.stdenv.mkDerivation {
@@ -9,8 +7,8 @@ pkgs.stdenv.mkDerivation {
   src = pkgs.fetchFromGitHub {
     owner = "DanielGavin";
     repo = "ols";
-    rev = "master";
-    hash = "sha256-/1ZqUc1RN7uav2hfCrb1EKw67EvXPZgKBYyd0NqRgLA="; # clear to update to latest version
+    rev = "e67f5803fe923a16d4741aa6f6a65c961af37b22"; # nightly commit
+    hash = "sha256-r8nNvO4PhQo5KmjER2ZmoFdYDL8aSGx4Hr0xyDzhkss="; # pkgs.lib.fakeHash
   };
 
   nativeBuildInputs = [
