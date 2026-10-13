@@ -52,6 +52,7 @@
           pnpm
           nodejs
           python3
+          typescript
 
           # lsp
           astro-language-server
