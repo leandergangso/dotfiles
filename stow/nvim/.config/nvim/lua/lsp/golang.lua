@@ -7,7 +7,7 @@ return {
 		gopls = {
 			gofumpt = true,
 			staticcheck = true,
-			usePlaceholders = false,
+			usePlaceholders = true,
 			completeUnimported = true,
 			analyses = {
 				unusedparams = true,
