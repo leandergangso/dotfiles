@@ -40,7 +40,7 @@
           jq
           neovim
           ripgrep
-          tailwindcss
+          tailwindcss_4
           tree
           tree-sitter
           yazi
