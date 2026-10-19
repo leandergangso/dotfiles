@@ -1,10 +1,11 @@
 {
   # init:       nix profile add ~/.dotfiles
-  # update:     nix flake upgrade --all --refresh
+  # update:     nix flake update --refresh
+  # profile:    nix profile upgrade --all --refresh
   # template:   nix flake init -t ~/.dotfiles#default
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   };
 
   outputs =
