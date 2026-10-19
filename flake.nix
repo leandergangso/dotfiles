@@ -1,7 +1,7 @@
 {
   # init:       nix profile add ~/.dotfiles
-  # update:     nix flake update --refresh
   # profile:    nix profile upgrade --all --refresh
+  # update:     nix flake update --refresh
   # template:   nix flake init -t ~/.dotfiles#default
 
   inputs = {
