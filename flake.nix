@@ -39,6 +39,7 @@
           jq
           neovim
           ripgrep
+          tailwindcss
           tree
           tree-sitter
           yazi
