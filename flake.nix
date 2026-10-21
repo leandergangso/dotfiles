@@ -60,7 +60,7 @@
           astro-language-server
           bash-language-server
           dockerfile-language-server
-          emmet-ls
+          emmet-language-server
           gopls
           zls # zig
           lua-language-server
