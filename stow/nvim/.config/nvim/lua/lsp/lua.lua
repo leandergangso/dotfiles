@@ -1,5 +1,6 @@
 ---@type vim.lsp.Config
 return {
+	disabled = false,
 	cmd = { "lua-language-server" },
 	filetypes = { "lua" },
 	root_markers = {

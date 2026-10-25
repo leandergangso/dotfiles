@@ -1,5 +1,6 @@
 ---@type vim.lsp.Config
 return {
+	disabled = false,
 	cmd = { "svelteserver", "--stdio" },
 	filetypes = { "svelte" },
 	root_markers = {

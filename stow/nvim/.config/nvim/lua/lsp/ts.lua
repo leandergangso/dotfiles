@@ -1,5 +1,6 @@
 ---@type vim.lsp.Config
 return {
+	disabled = false,
 	cmd = { "tsc", "--lsp", "--stdio" },
 	filetypes = {
 		"javascript",

@@ -1,5 +1,6 @@
 ---@type vim.lsp.Config
 return {
+	disabled = false,
 	cmd = { "docker-language-server", "start", "--stdio" },
 	filetypes = {
 		"dockerfile",

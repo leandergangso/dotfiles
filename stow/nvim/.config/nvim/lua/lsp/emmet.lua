@@ -1,5 +1,6 @@
 ---@type vim.lsp.Config
 return {
+	disabled = false,
 	cmd = { "emmet-language-server", "--stdio" },
 	filetypes = {
 		"css",

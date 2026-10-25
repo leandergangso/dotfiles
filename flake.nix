@@ -61,6 +61,7 @@
           bash-language-server
           dockerfile-language-server
           emmet-language-server
+          htmx-lsp
           gopls
           zls # zig
           lua-language-server
