@@ -43,6 +43,7 @@
           tailwindcss_4
           tree
           tree-sitter
+          typst
           yazi
           yq
           zoxide
