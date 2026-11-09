@@ -39,6 +39,7 @@
           go-task
           jq
           neovim
+          opencode
           ripgrep
           tailwindcss_4
           tree
