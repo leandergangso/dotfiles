@@ -37,7 +37,6 @@ function plugin-load {
 }
 
 # exports
-typeset EDITOR
 if command -v nvim >/dev/null; then
     EDITOR="$(which nvim)"
 else
