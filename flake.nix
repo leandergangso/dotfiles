@@ -26,6 +26,7 @@
           # utils
           age
           bat
+          delta
           brave
           fd
           figlet
@@ -35,6 +36,7 @@
           jq
           neovim
           opencode
+          oh-my-posh
           ripgrep
           tailwindcss_4
           tree

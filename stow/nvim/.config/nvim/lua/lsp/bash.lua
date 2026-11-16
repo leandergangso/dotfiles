@@ -2,6 +2,6 @@
 return {
 	disabled = false,
 	cmd = { "bash-language-server", "start" },
-	filetypes = { "sh", "bash", "zsh" },
+	filetypes = { "sh", "bash" },
 	root_markers = { ".git" },
 }

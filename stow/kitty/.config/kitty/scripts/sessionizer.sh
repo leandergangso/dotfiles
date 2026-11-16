@@ -16,7 +16,7 @@ session_name() {
 
 load_projects() {
     mapfile -t PROJECTS < <(
-        fd --hidden --type directory --max-depth 4 --glob .git "${SEARCH_PATHS[@]}" --exec dirname
+        fd --hidden --type directory --max-depth 4 --glob .git "${SEARCH_PATHS[@]}" --exec dirname 2>/dev/null
     )
 }
 

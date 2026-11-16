@@ -6,50 +6,47 @@
 # variables
 Z_PLUGIN_DIR="$HOME/.local/share/zsh/plugins"
 Z_COMP_DUMP="$HOME/.zcompdump"
+Z_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 
 # plugin manager
-function plugin-load {
-    local repo name plugdir candidate
-    local -a candidates
-    for repo in "$@"; do
-        name=${repo:t:r}
-        plugdir=$Z_PLUGIN_DIR/$name
-        candidates=(
-            "$plugdir/$name.plugin.zsh"
-            "$plugdir/$name.zsh"
-            "$plugdir/$name.sh"
-            "$plugdir/$name.zsh-theme"
-        )
-        if [[ ! -d $plugdir ]]; then
-            echo "Cloning $repo..."
-            git clone -q --depth 1 --recursive --shallow-submodules "$repo" "$plugdir" || continue
-        fi
+plugin_load() {
+    local repo="$1"
+    local name dir file
 
-        fpath=("$plugdir" "${fpath[@]}")
-        [[ -d "$plugdir/src" ]] && fpath=("$plugdir/src" "${fpath[@]}")
+    name=$(basename "$repo")
+    dir="$Z_PLUGIN_DIR/$name"
 
-        for candidate in "${candidates[@]}"; do
-            [[ -r $candidate ]] || continue
-            builtin source "$candidate"
+    if [ ! -d "$dir" ]; then
+        echo "Cloning $repo..."
+        git clone -q --depth 1 --recursive --shallow-submodules "$repo" "$dir" || return 0
+    fi
+
+    fpath=("$dir" "$dir/src" $fpath)
+
+    for file in "$dir/$name.plugin.zsh" "$dir/$name.zsh" "$dir/$name.sh" "$dir/$name.zsh-theme"; do
+        if [ -f "$file" ]; then
+            . "$file"
             break
-        done
+        fi
     done
 }
 
 # exports
-if command -v nvim >/dev/null; then
-    EDITOR="$(which nvim)"
+if command -v nvim >/dev/null 2>&1; then
+    EDITOR=nvim
 else
-    EDITOR="vim"
+    EDITOR=vim
 fi
 export EDITOR
 export SUDO_EDITOR="$EDITOR"
+
 export PATH="$HOME/.nix-profile/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export WORDCHARS="${WORDCHARS/\//}"
-export TERM="xterm-256color"
+#export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+export TERM="${TERM:-xterm-256color}"
 export DEFAULT_SHELL="$SHELL"
 export BAT_PAGING=never
 
@@ -61,33 +58,26 @@ zstyle ":fzf-tab:complete:cd:*" fzf-preview "ls --color \$realpath"
 zstyle ":fzf-tab:complete:__zoxide_z:*" fzf-preview "ls --color \$realpath"
 
 # completion plugins
-completion_repos=(
-    https://github.com/zsh-users/zsh-completions
-)
-plugin-load "${completion_repos[@]}"
+plugin_load https://github.com/zsh-users/zsh-completions
 
 # completions
 autoload -Uz compinit
-compinit -d "$Z_COMP_DUMP"
-{
-    if [[ -s "$Z_COMP_DUMP" && (! -s "${Z_COMP_DUMP}.zwc" || "$Z_COMP_DUMP" -nt "${Z_COMP_DUMP}.zwc") ]]; then
-        zcompile "$Z_COMP_DUMP"
-    fi
-}
+if [ -f "$Z_COMP_DUMP" ] && [ "$Z_COMP_DUMP" -nt "$HOME/.zshrc" ]; then
+    compinit -C -d "$Z_COMP_DUMP"
+else
+    compinit -d "$Z_COMP_DUMP"
+    touch "$Z_COMP_DUMP"
+fi
 
 # interactive plugins
-repos=(
-    https://github.com/Aloxaf/fzf-tab
-    https://github.com/zsh-users/zsh-history-substring-search
-    https://github.com/zsh-users/zsh-autosuggestions
-    https://github.com/zsh-users/zsh-syntax-highlighting
-)
-plugin-load "${repos[@]}"
+plugin_load https://github.com/Aloxaf/fzf-tab
+plugin_load https://github.com/zsh-users/zsh-history-substring-search
+plugin_load https://github.com/zsh-users/zsh-autosuggestions
 
 # history
 SAVEHIST=100000
 HISTSIZE=50000
-HISTFILE=~/.zsh_history
+HISTFILE="$HOME/.zsh_history"
 
 # options
 setopt AUTO_CD
@@ -99,6 +89,8 @@ setopt HIST_FIND_NO_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt HIST_NO_STORE
 setopt PUSHD_IGNORE_DUPS
+setopt INTERACTIVE_COMMENTS
+setopt NO_BEEP
 
 # keybinds
 bindkey -e
@@ -107,10 +99,16 @@ bindkey "^p" history-search-backward
 bindkey "^n" history-search-forward
 bindkey "^[[A" history-substring-search-up
 bindkey "^[[B" history-substring-search-down
-bindkey "^[[1;5D" backward-word  # key: ctrl+arrow-left
-bindkey "^[[1;5C" forward-word   # key: ctrl+arrow-right
-bindkey "^[[H" beginning-of-line # key: end
-bindkey "^[[F" end-of-line       # key: home
+bindkey "^[[OA" history-substring-search-up
+bindkey "^[[OB" history-substring-search-down
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
+bindkey "^[[1~" beginning-of-line
+bindkey "^[[4~" end-of-line
+bindkey "^[[7~" beginning-of-line
+bindkey "^[[8~" end-of-line
 bindkey " " magic-space
 
 # buffer line in editor
@@ -149,10 +147,29 @@ alias gl="git pull"
 alias glo="git log --all --oneline --decorate --graph"
 
 # integrations
-command -v fzf >/dev/null && eval "$(fzf --zsh)"
-command -v task >/dev/null && eval "$(task --completion zsh)"
-command -v zoxide >/dev/null && eval "$(zoxide init --cmd cd zsh)"
-command -v oh-my-posh >/dev/null && eval "$(oh-my-posh init zsh --config "$HOME/.config/ohmyposh/catppuccin-mocha.json")"
+if command -v fzf >/dev/null 2>&1; then
+    eval "$(fzf --zsh)"
+fi
+
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init --cmd cd zsh)"
+fi
+
+if command -v oh-my-posh >/dev/null 2>&1; then
+    eval "$(oh-my-posh init zsh --config "$HOME/.config/ohmyposh/catppuccin-mocha.json")"
+fi
+
+if command -v go-task >/dev/null 2>&1; then
+    TASK_BIN=$(readlink -f "$(command -v go-task)")
+    TASK_CACHE="$Z_CACHE_DIR/task-completion.zsh"
+    if [ "$TASK_BIN" != "$(cat "$TASK_CACHE.bin" 2>/dev/null)" ]; then
+        mkdir -p "$Z_CACHE_DIR"
+        go-task --completion zsh > "$TASK_CACHE" && echo "$TASK_BIN" > "$TASK_CACHE.bin"
+    fi
+    . "$TASK_CACHE"
+fi
+
+plugin_load https://github.com/zsh-users/zsh-syntax-highlighting
 
 # run profiling (remember to init zprof when used)
 #zprof

@@ -11,12 +11,17 @@
 [init]
 	defaultBranch = main
 [core]
-    pager = "less -FX"
-    #pager = "delta"
+    #pager = "less -FX"
+    pager = "delta"
 [delta]
-    navigate = true
+    syntax-theme = Catppuccin Mocha
+    side-by-side = false
     line-numbers = true
-    side-by-side = true
+    navigate = true
+    plus-style = syntax "#263b32"
+    plus-emph-style = syntax "#365c47"
+    minus-style = syntax "#442b32"
+    minus-emph-style = syntax "#68404a"
 [pull]
 	rebase = true
 [url "git@github.com:"]

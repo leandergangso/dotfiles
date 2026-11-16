@@ -3,6 +3,7 @@
   "palette": {
     "os": "#BAC2DE",
     "closer": "p:os",
+    "error": "#F38BA8",
     "pink": "#EBA0AC",
     "lavender": "#B4BEFE",
     "blue": "#89B4FA"
@@ -47,7 +48,6 @@
         {
           "foreground": "p:pink",
           "options": {
-            "folder_icon": "..\ue5fe..",
             "home_icon": "~",
             "style": "full"
           },
@@ -76,12 +76,8 @@
           "style": "plain",
           "template": "\uf105",
           "foreground_templates": [
-            "{{if gt .Code 0}}red{{end}}",
-            "{{if eq .Code 0}}p:closer{{end}}"
-          ],
-          "options": {
-            "cache_duration": "none"
-          }
+            "{{ if gt .Code 0 }}p:error{{ else }}p:closer{{ end }}"
+          ]
         }
       ]
     },
