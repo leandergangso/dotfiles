@@ -15,8 +15,10 @@ session_name() {
 }
 
 load_projects() {
+    # .git is a dir in normal repos and a file in worktrees, so match both.
+    # --no-ignore also catches worktrees kept in gitignored folders.
     mapfile -t PROJECTS < <(
-        fd --hidden --type directory --max-depth 4 --glob .git "${SEARCH_PATHS[@]}" --exec dirname 2>/dev/null
+        fd --hidden --no-ignore --max-depth 4 --glob .git "${SEARCH_PATHS[@]}" --exec dirname 2>/dev/null
     )
 }
 
