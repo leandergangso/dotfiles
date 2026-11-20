@@ -37,6 +37,7 @@
           neovim
           opencode
           oh-my-posh
+          process-compose
           ripgrep
           tailwindcss_4
           tree
