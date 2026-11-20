@@ -22,22 +22,22 @@
       "newline": true,
       "segments": [
         {
+          "type": "session",
+          "style": "plain",
+          "foreground": "p:pink",
+          "template": "{{ if .SSHSession }}\ueea7  {{ end }}"
+        },
+        {
           "type": "nix-shell",
           "style": "plain",
           "foreground": "p:blue",
-          "template": "\uf313 "
+          "template": "\uf313  "
         },
         {
           "type": "python",
           "style": "plain",
           "foreground": "p:lavender",
           "template": "{{ if .Venv }}(\ue235 {{ .Venv }}) {{ end }}"
-        },
-        {
-          "type": "session",
-          "style": "plain",
-          "foreground": "p:pink",
-          "template": "{{ if .SSHSession }}\ueea7  {{ end }}"
         },
         {
           "foreground": "p:blue",
